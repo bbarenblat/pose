@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+	<TITLE>The Help Dialog - ESP Widget Set for FLTK</TITLE>
+	<LINK REL="STYLESHEET" TYPE="text/css" HREF="fltk.css">
+</HEAD>
+
+<BODY BGCOLOR="#ccccff">
+
+<H1>The Help Dialog</H1>
+
+<P>The <CODE>HelpDialog</CODE> widget displays HTML files and allows the
+user to click on links to do navigation. Currently most HTML 2.0 elements
+are supported except for images. Table support is primitive at best.
+
+<P>Even so, it provides enough capabilities to be used for on-line help and
+other HTML applications.
+
+<H2>Implementation</H2>
+
+<P>The <CODE>HelpDialog</CODE> widget combines a dialog window, history buttons,
+text size buttons, and the <CODE>HelpView</CODE> widget to provide an embedded
+HTML file viewing dialog.
+
+<H2>Using the HelpDialog Widget</H2>
+
+<P>To use the <CODE>HelpDialog</CODE> widget in your program, do:
+
+<UL><PRE>
+#include "HelpDialog.h"
+
+...
+
+{
+  HelpDialog help();
+
+  help.load("filename.html");
+  help.show();
+  while (help.visible())
+    Fl::wait();
+}
+</PRE></UL>
+
+</BODY>
+</HTML>

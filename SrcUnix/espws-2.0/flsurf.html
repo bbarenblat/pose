@@ -1,0 +1,66 @@
+<HTML>
+<HEAD>
+	<TITLE>The Help Application (flsurf) - ESP Widget Set for FLTK</TITLE>
+	<LINK REL="STYLESHEET" TYPE="text/css" HREF="fltk.css">
+	<MAP NAME="navbar">
+		<AREA SHAPE="RECT" COORD="20,19,74,36" HREF="index.html" ALT="Widget Set Home Page">
+		<AREA SHAPE="RECT" COORD="96,19,240,36" HREF="documentation.html" ALT="Widget Set Documentation">
+		<AREA SHAPE="RECT" COORD="262,19,356,36" HREF="download.html" ALT="Download Widget Set">
+		<AREA SHAPE="RECT" COORD="378,19,416,36" HREF="http://www.easysw.com" ALT="ESP Home Page">
+		<AREA SHAPE="RECT" COORD="438,19,487,36" HREF="http://www.fltk.org" ALT="FLTK Home Page">
+	</MAP>
+</HEAD>
+
+<BODY BGCOLOR="#ccccff">
+
+<H1>The Help Application (flsurf)</H1>
+
+<P>The <CODE>HelpApp</CODE> widget provides a simple web browser application,
+complete with bookmarks, proxy support, and so forth. The <CODE>flsurf</CODE>
+application included with the distribution demonstrates how to use it.
+
+<H2>Implementation</H2>
+
+<P>The <CODE>HelpApp</CODE> widget is composed of several windows and control
+widgets. The HTML viewing portion is handled by the <CODE>HelpView</CODE>
+widget, while file selection is handled by the <CODE>FileChooser</CODE>
+widget.
+
+<P>HTTP access to files is handled by the <A HREF="http://www.cups.org">CUPS</A>
+HTTP functions. Currently only a single file is cached, so any navigation
+results in a reload.
+
+<H2>Using the HelpApp Widget</H2>
+
+<P>The source for <CODE>flsurf</CODE> is shown below:
+
+<UL><PRE>
+#include "HelpApp.h"
+#include &lt;FL/x.H>
+
+int				// O - Exit status
+main(int  argc,			// I - Number of command-line arguments
+     char *argv[])		// I - Command-line arguments
+{
+  HelpApp	*app;		// Help application
+
+
+  fl_open_display();
+
+  app = new HelpApp;
+
+  if (argc >= 2)
+    app->load(argv[1]);
+
+  app->show();
+
+  Fl::run();
+
+  delete app;
+
+  return (0);
+}
+</PRE></UL>
+
+</BODY>
+</HTML>

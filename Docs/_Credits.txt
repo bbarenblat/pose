@@ -1,0 +1,219 @@
+========================================================================
+Credits for the Palm OS Emulator
+Copyright (c) 1999-2001 Palm, Inc. or its subsidiaries.
+All rights reserved.
+
+Please send bug reports, comments, suggestions, etc. to
+<mailto:bug.reports@corp.palm.com>
+========================================================================
+
+The Palm OS Emulator is currently a Palm Computing product.  However, it
+was not originally written by Palm Computing.  Rather, it was developed
+by outside developers, on their own time and without help from Palm
+Computing.  This product is a tribute to them, their perseverance,
+their creativity and their ingenuity.  We just stepped in after the hard
+parts were done.
+
+------------------------------------------------------------------------
+* Greg Hewgill
+  <http://www.hewgill.com/>
+
+	Original Copilot, the basis for the Windows version of the Palm OS
+	Emulator.  See the article "13hewgil.pdf" on how he developed
+	Copilot.
+
+------------------------------------------------------------------------
+* Craig Schofield
+  <http://members.aol.com/illumesoft/illume.html>
+
+	Macintosh port of Copilot, the basis for the Macintosh version of
+	the Palm OS Emulator.
+
+------------------------------------------------------------------------
+* Bernd Schmidt
+  <http://www.freiburg.linux.de/~uae/>
+
+	UAE (UAE Amiga Emulator), which provides the 68000 CPU emulator
+	used at the core of Copilot.
+
+------------------------------------------------------------------------
+* Bruce Ashley Photography
+  Santa Cruz, Ca 831-429-8300
+  email: ba@phot.com
+
+	For the amazing skins.
+
+------------------------------------------------------------------------
+* Bill Spitzak and others
+  <http://www.fltk.org/>
+
+	FLTK - Fast Light Tool Kit for Unix (and Windows and soon Mac).
+
+------------------------------------------------------------------------
+* Matthias Ulrich Neeracher
+  <http://www.sourceforge.net/projects/gusi>
+  <http://www.iis.ee.ethz.ch/~neeri/macintosh/gusi-qa.html>
+
+	GUSI -- the Grand Unified Sockets Interface for Macintosh.
+
+------------------------------------------------------------------------
+* John C. Daub
+
+	CURLPushButton, used in the Mac emulator's About Box.
+
+------------------------------------------------------------------------
+* Quinn "The Eskimo" and Peter N Lewis, et al
+  <ftp://ftp.interarchy.com/>
+
+	Internet Config, the brains behind the hyperlinks in the Mac emulator's
+	stunning About Box.
+
+------------------------------------------------------------------------
+* Neil Rhodes
+
+	Communications Toolbox support in Mac serial code.
+
+------------------------------------------------------------------------
+* Ron Marianetti
+
+	Fixes and speedups to the TCP/debugger handling code.
+
+------------------------------------------------------------------------
+* Adam Dingle
+
+	Conditional breakpoints.
+	Profiling output enhancements.
+	Display address of corruption in errors reporting corrupted heaps.
+
+------------------------------------------------------------------------
+* Jean-loup Gailly
+  <http://www.gzip.org/>
+
+	gzip.
+
+------------------------------------------------------------------------
+* The Independent JPEG Group
+  <http://www.ijg.org/>
+
+	JPEG decompression routines.
+
+------------------------------------------------------------------------
+* Jeff Prosise
+
+	The CQuantize class for collecting palette colors from a 24-bit image.
+
+	Algorithm from the August 1996 issue of Microsoft Systems Journal.
+		<http://msdn.microsoft.com/library/periodic/period96/msj/S3F1.htm>
+
+	Source code from the October 1997 issue of Microsoft Systems Journal.
+		<http://msdn.microsoft.com/library/periodic/period97/wicked1097.htm>
+
+------------------------------------------------------------------------
+* Catherine White, Stuart Malone
+  <http://www.llamagraphics.com/>
+
+	Profiling code clean-ups.
+	Many excellent bug reports and analyses.
+
+------------------------------------------------------------------------
+* Jerry Kirk, Michael Kedl
+
+	QNX Neutrino port.
+	Added serial port emulation code.
+	Added additional keyboard support.
+	Fixed massive memory leak.
+
+------------------------------------------------------------------------
+* Jon Fo
+
+	Solaris 2.6/7 modifications.
+
+------------------------------------------------------------------------
+* Frank Yellin
+
+	Solaris 2.6/7 modifications.
+	Many bug fixes to the NetLib redirection code.
+
+------------------------------------------------------------------------
+* Akhil Arora, Sun Microsystems
+
+	For the long-term loan of an Ultra 2 Sparc system for Solaris
+	development.
+
+------------------------------------------------------------------------
+* Stefan Hoffmeister
+
+	Borland C++ Builder port.
+
+------------------------------------------------------------------------
+* The traitor formerly known as the intern known as Jerry Lin
+
+	Boggle sample program.
+	Gremlins Hordes.
+	Palm OS Emulator Binder.
+	Assorted other fit-only-for-an-intern tasks.
+
+------------------------------------------------------------------------
+* The intern known as Toshi Clark
+
+	Eights sample program (cut down version of the 15 puzzle).
+	IR redirection.
+	Session Info dialog.
+	Horde stats.
+	SuperVZ emulation.
+	Initial MediaQ emulation.
+	Gremlin step/resume bug fixes.
+	Support for new (unreleased) Palm device.
+	Unique profile output file names.
+	International Strict Checks.
+	Initial Gremlin Minimization implementation.
+
+------------------------------------------------------------------------
+* Red Dutta
+
+	"Export Database..." menu item.
+
+------------------------------------------------------------------------
+* Ben Darnell
+
+	Debian port.
+
+------------------------------------------------------------------------
+* John Ludwig
+
+	FreeBSD port.
+
+------------------------------------------------------------------------
+* Easy Software
+  <http://www.easysw.com/~mike/espws/>
+
+	FLTK Widget Set.
+
+------------------------------------------------------------------------
+* Scott Gruby
+  <http://www.gruby.org/>
+
+	Carbon port.
+
+------------------------------------------------------------------------
+* Alexandre Parenteau
+  <http://www.cvsgui.org/>
+
+	Carbonized GUSI 2.1.5.
+
+------------------------------------------------------------------------
+* Anthony Fishbeck
+  <http://www.pocketpyro.com/>
+
+	Design of plug-in architecture, and re-implementation of the
+	Emulator's system function patch system to make use of it.
+
+------------------------------------------------------------------------
+* Cooperative Computers, Inc. (Stuart Eichert, Justin Clark)
+  <http://www.coopcomp.com/>
+
+	Gremlin Minimization enhancements.
+
+------------------------------------------------------------------------
+And thanks to the many users of the Palm OS Emulator who have made
+suggestions on how to make it even better!

@@ -1,0 +1,209 @@
+<HTML>
+<HEAD>
+	<TITLE>Release Notes - ESP Widget Set for FLTK</TITLE>
+	<LINK REL="STYLESHEET" TYPE="text/css" HREF="fltk.css">
+</HEAD>
+
+<BODY BGCOLOR="#ccccff">
+
+<H1>Release Notes</H1>
+
+<H2>Changes in v2.0</A></H2>
+
+<UL>
+
+	<LI><B>Merged FileChooser and HelpDialog distributions</B>
+
+	<LI>Got rid of several compiler warnings (converting from float to int).
+
+	<LI>Open files in binary mode (workaround for MSVC++ C library
+	problems)
+
+	<LI>Fixed scrollbar problems.
+
+	<LI>Fixed <CODE>HR</CODE> problems (wasn't adding x() and y() offset.)
+
+	<LI>New <CODE>h()</CODE>, <CODE>position()</CODE>, <CODE>resize()</CODE>,
+	<CODE>w()</CODE>, <CODE>x()</CODE>, and <CODE>y()</CODE> methods to
+	control help dialog window.
+
+	<LI>New <CODE>link()</CODE> callback method - allows you to support
+	loading of data from other locations.
+
+	<LI>New <CODE>textcolor()</CODE> methods to control default text
+	color.
+
+	<LI>Now support <CODE>TABLE</CODE> border and width attributes.
+
+	<LI>Now support <CODE>BODY</CODE> color attributes.
+
+	<LI>Now support horizontal alignment.
+
+	<LI>Now support table background colors.
+
+	<LI>New <CODE>flsurf</CODE> application that supports limited web
+	browsing, etc.  (web browsing requires CUPS library)
+
+	<LI>F_OK wasn't defined under Windows.
+
+	<LI>FileIcon::load() didn't check the filename extension
+	properly - it was missing the ".".
+
+	<LI>FileIcon::load_xpm() needed to use a case-insensitive
+	comparison for color names.
+
+	<LI>The KDE load_kde_mimelnk() function had the fopen()
+	check backwards.
+
+	<LI>Some of the old FTI code still used NULL for the
+	outline index, but GCC 2.95 didn't like that.
+
+	<LI>Added support for column_widths() and column_char()
+	methods from the Fl_Browser widget.
+
+	<LI>OS/2 fixes from Alexander Mai.
+
+</UL>
+
+<H2>Changes in HelpView v1.0.1</H2>
+
+<UL>
+
+	<LI>Now include a makefile and configure script.
+
+</UL>
+
+<H2>Changes in FileChooser v1.4.2</H2>
+
+<UL>
+
+	<LI>FileBrowser::load() didn't handle unreadable directories.
+
+	<LI>FileIcon::load_fti() could store the outline color in freed
+	memory.
+
+	<LI>FileIcon::load_system_icons() now uses default icons that
+	look like Microsoft Windows icons.
+
+	<LI>FileIcon::load_system_icons() now supports GNOME and KDE
+	icons.
+
+	<LI>FileIcon::draw() now accepts an "active" flag so that
+	inactive controls are drawn with inactive icons.
+
+</UL>
+
+<H2>Changes in FileChooser v1.4.1</H2>
+
+<UL>
+
+	<LI>Now include a makefile and configure script.
+
+	<LI>Added missing XBM icon files.
+
+</UL>
+
+<H2>Changes in FileChooser v1.4</H2>
+
+<UL>
+
+	<LI>Now provided under the LGPL.
+
+	<LI>Pressing the Cancel button, hitting escape, or closing the
+	dialog window clears the FileChooser value.
+
+	<LI>The FileIcon class now loads icons for CDE and the IRIX
+	Interactive Desktop (auto-detect at run-time.)  Support for
+	GNOME, KDE, and Windows is in the works.
+
+	<LI>The FileIcon class now provides a <CODE>label()</CODE> method
+	for using icons as labels for widgets.
+
+</UL>
+
+<H2>Changes in FileChooser v1.3</H2>
+
+<UL>
+
+	<LI>Added new <CODE>FileInput</CODE> widget (world's shortest
+	widget! :) so that filename completion can be done with the
+	Tab, End, or right arrow key.
+
+	<LI>The <CODE>FileChooser</CODE> widget now uses the
+	<CODE>FileInput</CODE> widget instead of <CODE>Fl_Input</CODE>.
+
+	<LI>The text selection in the filename field now puts the cursor
+	at the end of the selection (unless you type the Backspace key.)
+
+</UL>
+
+<H2>Changes in FileChooser v1.2</H2>
+
+<UL>
+
+	<LI>Fixed VC++ compile problems.
+
+	<LI>Filename completion now scrolls the file list to the first matching
+	file and selects it when it matches exactly.
+
+	<LI>The <code>value()</code> method incorrectly reset the chooser
+	type to <code>FileChooser::SINGLE</code> when the type was
+	<code>FileChooser::CREATE</code>.
+
+	<LI>The <code>value()</code> method didn't handle directories without
+	filenames properly (always showed drives/file systems).
+
+	<LI>The "new directory" button is now only activated when the
+	chooser type is <code>FileChooser::CREATE</code>.
+
+	<LI>The "OK" button is now disabled until a filename is selected or
+	entered on the keyboard.
+
+	<LI>Previously the chooser would only beep at the user when a non-
+	existing filename was entered for <code>SINGLE</code> and
+	<code>MULTI</code> type choosers.  It now also pops up an alert
+	dialog with the text, "Please choose an existing file!"
+
+	<LI>Added <code>iconsize()</code>, <code>textcolor()</code>,
+	<code>textfont()</code>, and <code>textsize()</code> methods to
+	the <code>FileChooser</code> class.
+
+	<LI>The chooser no longer loads any icons by default; call the
+	new <code>load_system_icons()</code> method in the
+	<code>FileIcon</code> class to get the icons.
+
+	<LI>The <code>FileBrowser</code> widget now has <code>iconsize()</code>
+	methods to control the size of the icons separately from the text font.
+
+	<LI>The <code>FileBrowser</code> widget now supports tabs and newlines
+	in the item string.
+
+	<LI>Added <code>iconsize</code>, <code>textcolor</code>,
+	<code>textfont</code>, and <code>textsize</code> methods to the
+	<code>FileChooser</code> class.
+
+</UL>
+
+<H2>Changes in FileChooser v1.1</H2>
+
+<UL>
+
+	<LI>The <code>FileChooser::value()</code> method now has a default
+	argument of 1.
+
+	<LI>Changed the <code>multi</code> methods and arguments to
+	<code>type</code> so that the chooser can limit selection to existing
+	files if necessary.
+
+	<LI>Added a <code>FileChooser::value(pathname)</code> method to
+	set the current selection and/or directory.
+
+	<LI>The file completion code now handles directory navigation when
+	you press "/".
+
+	<LI>The filename field now gets the full width of the window.
+
+</UL>
+
+</BODY>
+</HTML>

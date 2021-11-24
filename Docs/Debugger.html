@@ -1,0 +1,854 @@
+<HTML>
+<!--This file created 3:45 AM  8/23/99 by Claris Home Page version 3.0-->
+<HEAD>
+   <TITLE>Debugger</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 3.0">
+   <X-CLARIS-WINDOW TOP=23 BOTTOM=859 LEFT=623 RIGHT=1234>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"><META NAME="Author" CONTENT="Keith Rollin">
+</HEAD>
+<BODY>
+<H1><CENTER>Palm Debugger Protocol</CENTER></H1>
+
+<CENTER><TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="80%">
+   <TR>
+      <TD>
+         <H3>Document Order</H3>
+      </TD>
+      <TD>
+         <H3>Alphabetical Order</H3>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Overview">Overview</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Continue Command">Continue Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#State Command">State Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Find Command">Find Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Read Memory Command">Read Memory
+         Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Get Breakpoints Command">Get Breakpoints
+         Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Write Memory Command">Write Memory
+         Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Get Routine Name Command">Get Routine Name
+         Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Single Step Command">Single Step
+         Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Get Trap Breaks Command">Get Trap Breaks
+         Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Get Routine Name Command">Get Routine Name
+         Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Get Trap Conditionals Command">Get Trap
+         Conditionals Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Read Registers Command">Read Registers
+         Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Message Command">Message Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Write Registers Command">Write Registers
+         Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Overview">Overview</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Continue Command">Continue Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Read Memory Command">Read Memory
+         Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Get Breakpoints Command">Get Breakpoints
+         Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Read Registers Command">Read Registers
+         Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Set Breakpoints Command">Set Breakpoints
+         Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#RPC Command">RPC Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Toggle Debugger Breaks Command">Toggle Debugger
+         Breaks Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Set Breakpoints Command">Set Breakpoints
+         Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Get Trap Breaks Command">Get Trap Breaks
+         Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Set Trap Breaks Command">Set Trap Breaks
+         Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Set Trap Breaks Command">Set Trap Breaks
+         Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Set Trap Conditionals Command">Set Trap
+         Conditionals Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Find Command">Find Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Single Step Command">Single Step
+         Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Message Command">Message Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#State Command">State Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#RPC Command">RPC Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Toggle Debugger Breaks Command">Toggle Debugger
+         Breaks Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Get Trap Conditionals Command">Get Trap
+         Conditionals Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Write Memory Command">Write Memory
+         Command</A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD>
+         <P><A HREF="#Set Trap Conditionals Command">Set Trap
+         Conditionals Command</A></P>
+      </TD>
+      <TD>
+         <P><A HREF="#Write Registers Command">Write Registers
+         Command</A></P>
+      </TD>
+   </TR>
+</TABLE>
+</CENTER>
+
+<H3><A NAME=Overview></A>Overview</H3>
+
+<P>In this document, "target" refers to the object being debugged.
+This could be the Palm ROM, or Palm OS&nbsp;Emulator. "Host" refers
+to the debugger, which could be either the Metrowerks debugger or the
+Palm Debugger. The target side of the debugger communicates by
+sending command packets to the user interface on the host side.
+Basically, the target side acts as a slave to the host, carrying out
+commands and reporting back results.</P>
+
+<P>The target side must be able to respond to some basic command
+types sent from the host side. These are: get state, display memory,
+set memory, single step, get routine name, display registers, set
+registers, continue, set breakpoint, clear breakpoint, set a-trap,
+clear a-trap, find, and remote procedure call. All high-level
+commands that a user enters from the host side are broken down into
+one or more of these basic target commands, which are then sent to
+the target.</P>
+
+<P>A command packet can be a request packet, response packet, or
+message packet. Request packets are sent from the host to the target
+and must be answered by an appropriate response packet from the
+target. Message packets are sent from either the target or the host
+and merely report status information and do not require a response
+from the recipient.</P>
+
+<P>There is no extensive protocol involved between the host and
+target. Basically, the host sends a request packet and waits for a
+response from the target, or a timeout. If a response is not detected
+by the timeout period, the host does not retry the request but could
+display a message to the user saying that the target is not
+responding. Usually, if the target does not respond, it means either
+that the target is currently executing code and has not encountered a
+breakpoint, or that the target is so messed up that it can't even run
+the debugger.</P>
+
+<P>Figure 1 shows the structure of request, response, and message
+packets. <FONT FACE="Times">Basically, every packet consists of a
+packet header, a variable length packet body, and a packet footer.
+The maximim size of a packet body is 272 bytes. The packet header
+starts with the key 24-bit value $BEEFED and includes packet header
+information and a checksum of just the header itself. The packet
+footer contains a 16-bit CRC of the header and body (not
+footer).</FONT></P>
+
+<P><FONT FACE="Times">Following the 24-bit value $BEEFED at the start
+of the packet header is a destination socket ID byte, a source socket
+ID byte, a packet type byte, a 2 byte body size, a transaction ID
+byte, and an 8 bit checksum of the header. The destination and source
+socket IDs and the packet type bytes are always 0 for debugger
+packets. The bodySize field is the number of bytes that are in the
+body - which will depend on the particular command being sent. The
+transaction ID is an 8 bit value that gets incremented every time a
+command is sent from the host. In order for a response packet from
+the target to be recognized by the host, its transaction ID must
+match the transaction ID of the original request packet.</FONT></P>
+
+<P><FONT FACE="Times">The packet body starts with a command byte
+immediately followed by a filler byte. </FONT>The command byte
+encodes the particular command being sent or acknowledged. Request
+packets always have the upper bit of the command byte clear, response
+packets have the upper bit set. Each command has it's own specific
+structure following the command and filler bytes.&nbsp;</P>
+
+<P>&nbsp;</P>
+
+<P><TT>        +--------------------+<BR>
+        |         $BE (1)    |<BR>
+        |         $EF (1)    |<BR>
+        |         $ED (1)    |<BR>
+        |     dest ID (1)    | Header (10 bytes)<BR>
+        |      src ID (1)    |<BR>
+        |        type (1)    |<BR>
+        |    bodySize (2)    |<BR>
+        |     transID (1)    |<BR>
+        |    checkSum (1)    |<BR>
+        +--------------------+<BR>
+        |     command (1)    |<BR>
+        |      filler (1)    | Body (2-272 bytes)<BR>
+        | variable size data |<BR>
+        +--------------------+<BR>
+        |         CRC (2)    | Footer (2 bytes)<BR>
+        +--------------------+<BR>
+</TT></P>
+
+<CENTER><B>Figure 1 - Structure of Packets</B></CENTER>
+
+<P>&nbsp;</P>
+
+<H3><A NAME="State Command"></A>State Command</H3>
+
+<P>Figure 2 shows the structure of the request and response bodies
+for the state command. The host sends this command in order to
+determine the current state of the target, including the current
+program counter, the values of all the registers, the reason why the
+target entered the debugger, the current breakpoints, and the name of
+the routine that the program counter is in. The target will also send
+a state response packet to the host whenever it encounters an
+exception and enters the debugger - whether due to a breakpoint, bus
+error, single step, etc. This is the only time a response packet is
+sent to the host without a corresponding request packet from the
+host.</P>
+
+<PRE><TT>#define sysPktStateCmd&nbsp;&nbsp;&nbsp; 0x00
+#define sysPktStateRsp&nbsp;&nbsp;&nbsp; 0x80</TT></PRE>
+
+<BLOCKQUOTE><PRE><I><TT>Max length of a routine name</TT></I></PRE></BLOCKQUOTE>
+
+<PRE><TT>#define sysPktMaxNameLen&nbsp; 32</TT></PRE>
+
+<BLOCKQUOTE><PRE><I><TT>Number of remote code words to send in the 'state response' packet</TT></I></PRE></BLOCKQUOTE>
+
+<PRE><TT>#define sysPktStateRspInstWords&nbsp; 15
+#define dbgNormalBreakpoints&nbsp;&nbsp;&nbsp;&nbsp; 5
+#define dbgTempBPIndex&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dbgNormalBreakpoints
+#define dbgTotalBreakpoints&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (dbgTempBPIndex+1)
+typedef struct BreakpointType
+{
+&nbsp;&nbsp;&nbsp; Ptr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; addr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // address of breakpoint
+&nbsp;&nbsp;&nbsp; Boolean&nbsp; enabled;&nbsp;&nbsp;&nbsp;&nbsp; // true if enabled
+&nbsp;&nbsp;&nbsp; Boolean&nbsp; installed;&nbsp;&nbsp; // for alignment
+} BreakpointType;
+&nbsp;
+typedef struct SysPktStateCmdType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp;&nbsp; // Common Body header
+} SysPktStateCmdCmdType;</TT></PRE>
+
+<BLOCKQUOTE><PRE><I><TT>Packet Body structure for the state command response packet</TT></I></PRE></BLOCKQUOTE>
+
+<PRE><TT>typedef struct SysPktStateRspType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Common Body header
+&nbsp;&nbsp;&nbsp; Boolean&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; resetted;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // true if target has just reset
+&nbsp;&nbsp;&nbsp; Word&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exceptionId;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // exception which caused the
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // debugger to be entered.
+&nbsp;&nbsp;&nbsp; M68KregsType&nbsp;&nbsp; reg;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // current remote registers.
+&nbsp;&nbsp;&nbsp; Word&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inst&#91;sysPktStateRspInstWords&#93;;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // instruction buffer for
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // code beginning at PC.
+&nbsp;&nbsp;&nbsp; BreakpointType bp&#91;dbgTotalBreakpoints&#93;; // current breakpoints
+&nbsp;&nbsp;&nbsp; void*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; startAddr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // start address of routine
+&nbsp;&nbsp;&nbsp; void*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; endAddr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // end address of routine
+&nbsp;&nbsp;&nbsp; char&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name&#91;sysPktMaxNameLen&#93;;&nbsp; // routine name (0 or more chars),
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // immediately follows the address range.
+&nbsp;&nbsp;&nbsp; Byte&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trapTableRev;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // rev of trap table. Used to determine
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // when host's trap table cache is invalid
+} SysPktStateRspType;</TT></PRE>
+
+<CENTER><B>Figure 2 - State Command</B></CENTER>
+
+<P>The resetted field is non-zero if the target has reset itself
+since the last time the debugger was entered. The host can use the
+exceptionID field to determine why the debugger on the target was
+entered because it contains the address of the exception vector: $8
+for a bus error, $7C for a non-maskable interrupt, etc. The 8 data
+registers are stored in the packet body starting from D0. The 7
+address registers are stored starting from A0. The instruction buffer
+contains the next 30 bytes of code starting from the current program
+counter. The breakpoint list contains the list of the current
+breakpoints on the device. This is a fixed length list of 6
+breakpoints - unused entries will have 0 in the enabled and installed
+fields. The last breakpoint in the list (breakpoint #5) is used
+exclusively for temporary breakpoints installed by the debugger for
+implementing commands like GoTill (gt).</P>
+
+<P>The routineStart, routineEnd, and routineName fields contain the
+starting and ending address and name of the current routine. The
+target side of the debugger determines this information. A routine
+name is placed at the end of every routine by the compiler and the
+target side of the debugger scans forward and backwards from the
+current program counter to determine this information.</P>
+
+<P>&nbsp;</P>
+
+<H3><A NAME="Read Memory Command"></A>Read Memory Command</H3>
+
+<P>Figure 3 shows the structure of the request and response bodies
+for the read command. This command is sent by the host in order to
+read memory on the target. It can return up to 256 bytes of data. The
+size of the response body depends on the number of bytes requested in
+the request packet.</P>
+
+<PRE><TT>#define sysPktReadMemCmd&nbsp;&nbsp; 0x01
+#define sysPktReadMemRsp&nbsp;&nbsp; 0x81
+&nbsp;
+typedef struct SysPktReadMemCmdType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+&nbsp;&nbsp;&nbsp; void*&nbsp; address;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Address to read
+&nbsp;&nbsp;&nbsp; Word&nbsp; numBytes;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // # of bytes to read
+} SysPktReadMemCmdType;
+&nbsp;
+typedef struct SysPktReadMemRspType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+&nbsp;// Byte&nbsp; data&#91;?&#93;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // variable size
+} SysPktReadMemRspType;</TT></PRE>
+
+<CENTER><B>Figure 3 - Read Command</B></CENTER>
+
+<P>&nbsp;</P>
+
+<H3><A NAME="Write Memory Command"></A>Write Memory Command</H3>
+
+<P>Figure 4 shows the structure of the request and response bodies
+for the write command. This command is sent by the host in order to
+write memory on the target. It can write up to 256 bytes of data. The
+size of the request packet depends on the number of bytes that need
+to be written.</P>
+
+<PRE><TT>#define sysPktWriteMemCmd&nbsp;&nbsp; 0x02
+#define sysPktWriteMemRsp&nbsp;&nbsp; 0x82
+&nbsp;
+typedef struct SysPktWriteMemCmdType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+&nbsp;&nbsp;&nbsp; void*&nbsp; address;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Address to write
+&nbsp;&nbsp;&nbsp; Word&nbsp; numBytes;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // # of bytes to write
+&nbsp;// Byte&nbsp; data&#91;?&#93;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // variable size data
+} SysPktWriteMemCmdType;
+&nbsp;
+typedef struct SysPktWriteMemRspType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+} SysPktWriteMemRspType;</TT></PRE>
+
+<CENTER><B>Figure 4 - Write Command</B></CENTER>
+
+<P>&nbsp;</P>
+
+<H3><A NAME="Single Step Command"></A>Single Step Command</H3>
+
+<P><STRIKE>Figure 5 shows the structure of the request and response
+bodies for the singleStep command. This command is sent by the host
+to tell the target to execute the next instruction. This command and
+the continue command (see below) are unique in that they do not get a
+respective response back from the target. The host relies on the fact
+that when the target re-enters the debugger it will automatically
+send a state response packet. In this case, the target will re-enter
+the debugger immediately after executing the next
+instruction.</STRIKE></P>
+
+<PRE><TT><STRIKE>#define sysPktSingleStepCmd&nbsp;&nbsp; 0x03</STRIKE></TT></PRE>
+
+<CENTER><B><STRIKE>Figure 5 - Single Step
+Command</STRIKE></B></CENTER>
+
+<P>Note: there is no actual single step command implemented in either
+the ROM or the Palm OS Emulator. Instead, this functionality is
+performed by setting the trace bit in the Status Register and
+executing a sysPktContinueCmd.</P>
+
+<P>&nbsp;</P>
+
+<H3><A NAME="Get Routine Name Command"></A>Get Routine Name
+Command</H3>
+
+<P>Figure 6 shows the structure of the request and response bodies
+for the getRoutineName command. The host sends this command to
+determine which routine a particular address is in. It will return
+the starting and ending address of the routine and the name. The name
+of each routine is imbedded into the code when it's compiled and the
+target can determine the starting and ending address and name of the
+routine by scanning forwards and backwards in the code for this
+information.</P>
+
+<PRE><TT>#define sysPktGetRtnNameCmd&nbsp;&nbsp; 0x04
+#define sysPktGetRtnNameRsp&nbsp;&nbsp; 0x84
+&nbsp;
+typedef struct SysPktRtnNameCmdType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+&nbsp;&nbsp;&nbsp; void*&nbsp; address;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // -&gt; address to query on
+} SysPktRtnNameCmdType;
+&nbsp;
+typedef struct SysPktRtnNameRspType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Common Body header
+&nbsp;&nbsp;&nbsp; void*&nbsp; address;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // -&gt; address to query on
+&nbsp;&nbsp;&nbsp; void*&nbsp; startAddr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // &lt;- start address of routine
+&nbsp;&nbsp;&nbsp; void*&nbsp; endAddr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // &lt;- end address of routine
+&nbsp;&nbsp;&nbsp; char&nbsp; name&#91;sysPktMaxNameLen&#93;; // &lt;- routine name, if any immediately
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp;&nbsp; follows the address range.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp;&nbsp; The balance need not be sent.
+} SysPktRtnNameRspType;</TT></PRE>
+
+<CENTER><B>Figure 6 - Get Routine Name Command</B></CENTER>
+
+<P>The address field in the response body is a copy of the address
+sent in the request. The startAddr and endAddr fields are the
+starting and ending address of the routine that includes address. The
+name field is the 0 terminated name of the routine. If the target can
+not determine which routine address is in, it will return 0 for the
+first byte of the name in the response body and endAddr will contain
+the last address that it scanned in trying to find out the routine
+name. Subsequent getRoutineName calls should use the endAddr from the
+previous call in order to look for more routines.</P>
+
+<P>&nbsp;</P>
+
+<H3><A NAME="Read Registers Command"></A>Read Registers Command</H3>
+
+<P>Figure 7 shows the structure of the request and response bodies
+for the readRegisters command. This command is sent by the host to
+get the value of each of the processor registers on the target. The 8
+data registers are stored in the packet body starting from D0. The 7
+address registers are stored starting from A0.</P>
+
+<PRE><TT>#define sysPktReadRegsCmd&nbsp;&nbsp; 0x05
+#define sysPktReadRegsRsp&nbsp;&nbsp; 0x85
+&nbsp;
+typedef struct SysPktReadRegsCmdTyp
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+} SysPktReadRegsCmdType;
+&nbsp;
+typedef struct SysPktReadRegsRspType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+&nbsp;&nbsp;&nbsp; M68KRegsType reg;&nbsp;&nbsp; // &lt;- return registers
+} SysPktReadRegsRspType;</TT></PRE>
+
+<CENTER><B>Figure 7 - Read Registers Command</B></CENTER>
+
+<P>&nbsp;</P>
+
+<H3><A NAME="Write Registers Command"></A>Write Registers
+Command</H3>
+
+<P>Figure 8 shows the structure of the request and response bodies
+for the writeRegisters command. This command is sent by the host to
+set the value of each of the processor registers on the target. The 8
+data registers are stored in the packet body starting from D0. The 7
+address registers are stored starting from A0.</P>
+
+<PRE><TT>#define sysPktWriteRegsCmd&nbsp;&nbsp; 0x06
+#define sysPktWriteRegsRsp&nbsp;&nbsp; 0x86
+&nbsp;
+typedef struct SysPktWriteRegsCmdType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+&nbsp;&nbsp;&nbsp; M68KRegsType reg;&nbsp;&nbsp;&nbsp; // -&gt; registers to write
+} SysPktWriteRegsCmdType;
+&nbsp;
+typedef struct SysPktWriteRegsRspType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+} SysPktWriteRegsRspType;</TT></PRE>
+
+<CENTER><B>Figure 8 - Write Registers Command</B></CENTER>
+
+<P>&nbsp;</P>
+
+<H3><A NAME="Continue Command"></A>Continue Command</H3>
+
+<P>Figure 9 shows the structure of the request and response bodies
+for the continue command. This command is sent by the host to tell
+the target to continue execution. This is usually sent as a result of
+the user entering the Go (g) command. The debugger on the target will
+not get re-entered again unless a breakpoint or other exception is
+encountered. The target does not send a response to this command. If
+the target does re-enter the debugger due to a subsequent exception,
+it will send a state response packet to the host.</P>
+
+<PRE><TT>#define sysPktContinueCmd&nbsp;&nbsp; 0x07
+&nbsp;
+typedef struct SysPktContinueCmdType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Common Body header
+&nbsp;&nbsp;&nbsp; M68KregsType regs;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // registers
+&nbsp;&nbsp;&nbsp; Boolean&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stepSpy;&nbsp;&nbsp;&nbsp;&nbsp; // set true to do step spy
+&nbsp;&nbsp;&nbsp; DWord&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ssAddr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // step spy address
+&nbsp;&nbsp;&nbsp; DWord&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ssCount;&nbsp;&nbsp;&nbsp;&nbsp; // # of bytes
+&nbsp;&nbsp;&nbsp; DWord&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ssCheckSum;&nbsp; // checksum
+} SysPktContinueCmdType;</TT></PRE>
+
+<CENTER><B>Figure 9 - Continue Command</B></CENTER>
+
+<P>&nbsp;</P>
+
+<H3><A NAME="Get Breakpoints Command"></A>Get Breakpoints
+Command</H3>
+
+<P>Figure 10 shows the structure of the request and response bodies
+for the getBreakpoints command. This command is sent by the host to
+get the current settings of all target breakpoints. The response body
+has an array of 6 breakpoints in it. If the enabled field for a
+particular breakpoint entry is 0, it means that breakpoint is
+disabled. If the address field is 0, it means that breakpoint is not
+used. The installed field is currently never used.</P>
+
+<PRE><TT>#define sysPktGetBreakpointsCmd&nbsp; 0x0B
+#define sysPktGetBreakpointsRsp&nbsp; 0x8B
+&nbsp;
+typedef struct SysPktGetBreakpointsCmdType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+} SysPktGetBreakpointsCmdType;
+&nbsp;
+typedef struct SysPktGetBreakpointsRspType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+&nbsp;&nbsp;&nbsp; BreakpointType bp&#91;dbgTotalBreakpoints&#93;;
+} SysPktGetBreakpointsRspType;</TT></PRE>
+
+<CENTER><B>Figure 10 - Get Breakpoints Command</B></CENTER>
+
+<P>&nbsp;</P>
+
+<H3><A NAME="Set Breakpoints Command"></A>Set Breakpoints
+Command</H3>
+
+<P>Figure 11 shows the structure of the request and response bodies
+for the setBreakpoints command. This command is sent by the host to
+set the target breakpoints. The request body has an array of 6
+breakpoints in it. If the enabled field for a particular breakpoint
+entry is 0, it means that breakpoint is disabled. If the address
+field is 0, it means that breakpoint is not used.</P>
+
+<PRE><TT>#define sysPktSetBreakpointsCmd&nbsp; 0x0C
+#define sysPktSetBreakpointsRsp&nbsp; 0x8C
+&nbsp;
+typedef struct SysPktSetTrapBreaksCmdType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+&nbsp;&nbsp;&nbsp; Word&nbsp; trapBP&#91;dbgTotalTrapBreaks&#93;;
+} SysPktSetTrapBreaksCmdType;
+&nbsp;
+typedef struct SysPktSetTrapBreaksRspType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+} SysPktSetTrapBreaksRspType;</TT></PRE>
+
+<CENTER><B>Figure 11 - Set Breakpoints Command</B></CENTER>
+
+<P>&nbsp;</P>
+
+<H3><A NAME="Toggle Debugger Breaks Command"></A>Toggle Debugger
+Breaks Command</H3>
+
+<P>Figure 12 shows the structure of the request and response bodies
+for the toggleDbgBreaks command. This command is sent by the host to
+enable or disable compiled-in breakpoints. A compiled in breakpoint
+is a special TRAP instruction that gets compiled into the code with
+the DbgBreak() and DbgSrcBreak() calls. The host can send this
+command to tell the target whether or not to ignore these
+breakpoints. The request toggles the state and the response returns
+the new state (non-zero for enabled, 0 for disabled).</P>
+
+<PRE><TT>#define sysPktDbgBreakToggleCmd&nbsp; 0x0D
+#define sysPktDbgBreakToggleRsp&nbsp; 0x8D
+&nbsp;
+typedef struct SysPktDbgBreakToggleCmdType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+} SysPktDbgBreakToggleCmdType;
+&nbsp;
+typedef struct SysPktDbgBreakToggleRspType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+&nbsp;&nbsp;&nbsp; Boolean&nbsp; newState;
+} SysPktDbgBreakToggleRspType;</TT></PRE>
+
+<CENTER><B>Figure 12 - Toggle Debugger Breaks Command</B></CENTER>
+
+<P>&nbsp;</P>
+
+<H3><A NAME="Get Trap Breaks Command"></A>Get Trap Breaks
+Command</H3>
+
+<P>Figure 13 shows the structure of the request and response bodies
+for the getTrapBreaks command. The host sends this command to get the
+current settings of all target trap breaks. The response body has an
+array of 5 traps in it. If the trap field is 0, it means that trap
+break is not used. Trap breaks are used to force the target to enter
+the debugger when a particular system trap is called. Up to 5 trap
+breaks can be set at any time.</P>
+
+<PRE>#define sysPktGetTrapBreaksCmd&nbsp; 0x10
+#define sysPktGetTrapBreaksRsp&nbsp; 0x90
+&nbsp;
+typedef struct SysPktGetTrapBreaksCmdType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+} SysPktGetTrapBreaksCmdType;
+&nbsp;
+typedef struct SysPktGetTrapBreaksRspType
+{
+&nbsp;&nbsp;&nbsp; _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+&nbsp;&nbsp;&nbsp; Word&nbsp; trapBP&#91;dbgTotalTrapBreaks&#93;;
+} SysPktGetTrapBreaksRspType;</PRE>
+
+<CENTER><B>Figure 13 - Get Trap Breaks Command</B></CENTER>
+
+<H3><A NAME="Set Trap Breaks Command"></A>Set Trap Breaks
+Command</H3>
+
+<P>Figure 14 shows the structure of the request and response bodies
+for the setTrapBreaks command. The host sends this command to set the
+current settings of all target trap breaks. The request body has an
+array of 5 traps in it. If the trap field is 0, it means that trap
+break is not used. Trap breaks are used to force the target to enter
+the debugger when a particular system trap is called. Up to 5 trap
+breaks can be set at any time.</P>
+
+<PRE>#define sysPktSetTrapBreaksCmd&nbsp; 0x11
+#define sysPktSetTrapBreaksRsp&nbsp; 0x91
+&nbsp;
+typedef struct SysPktSetTrapBreaksCmdType
+{
+    _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+    Word&nbsp; trapBP&#91;dbgTotalTrapBreaks&#93;;
+} SysPktSetTrapBreaksCmdType;
+&nbsp;
+typedef struct SysPktSetTrapBreaksRspType
+{
+    _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+} SysPktSetTrapBreaksRspType;</PRE>
+
+<CENTER><B>Figure 14 - Set Trap Breaks Command</B></CENTER>
+
+<H3><A NAME="Find Command"></A>Find Command</H3>
+
+<P>Figure 15 shows the structure of the request and response bodies
+for the find command. This command is sent by the host to search for
+data on the target. The firstAddr and lastAddr fields of the request
+set the range of addresses to search through. The numBytes field
+contains the number of bytes in the search string. If the
+caseInsensitive byte is non-zero, a case-insensitive search will be
+made. The variable length search string follows the caseInsensitive
+field.</P>
+
+<P>In the response body, addrFound contains the address of the found
+data. If the data was not found, the found field will be 0.</P>
+
+<PRE>#define sysPktFindCmd&nbsp;&nbsp;&nbsp; 0x13
+#define sysPktFindRsp&nbsp;&nbsp;&nbsp; 0x93
+&nbsp;
+typedef struct SysPktFindCmdType
+{
+    _sysPktBodyCommon;&nbsp;&nbsp;     // Common Body header
+    DWord&nbsp;  firstAddr;&nbsp;      // first address to search
+    DWord&nbsp;  lastAddr;&nbsp;       // last address to begin searching
+    Word&nbsp;   numBytes;&nbsp;       // number of data bytes to match
+    Boolean caseInsensitive; // if true, perform a case-insensitive search
+} SysPktFindCmdType;
+&nbsp;
+typedef struct SysPktFindRspType
+{
+    _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+    DWord&nbsp; addr;&nbsp;&nbsp;       // address where data was found
+    Boolean&nbsp; found;&nbsp;&nbsp;    // true if data was found
+} SysPktFindRspType;</PRE>
+
+<CENTER><B>Figure 15 - Find Command</B></CENTER>
+
+<H3><A NAME="Message Command"></A>Message Command</H3>
+
+<P>Figure 16 shows the structure of the message packet body. This
+packet is sent by the target to display a message on the host.
+Debugger messages can be compiled into the source code through the
+DbgMessage() call. They can be used by applications on Palm devices
+for displaying application specific debugging messages during
+execution. There is no response sent back from the host to the target
+when it receives one of these packets.</P>
+
+<PRE>#define sysPktRemoteMsgCmd&nbsp;&nbsp; 0x7F
+&nbsp;
+typedef struct SysPktRemoteMsgCmdType
+{
+    _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+    Byte&nbsp; text&#91;1&#93;;&nbsp;      // variable length text goes here
+} SysPktRemoteMsgCmdType;</PRE>
+
+<CENTER><B>Figure 16 - Message Command</B></CENTER>
+
+<H3><A NAME="RPC Command"></A>RPC Command</H3>
+
+<PRE>#define sysPktRPCCmd&nbsp;&nbsp;&nbsp; 0x0A
+#define sysPktRPCRsp&nbsp;&nbsp;&nbsp; 0x8A
+&nbsp;
+typedef struct SysPktRPCParamInfo
+{
+    Byte&nbsp;&nbsp; byRef;&nbsp;&nbsp;  // true if param is by reference
+    Byte&nbsp;  size;&nbsp;&nbsp;   // # of Bytes of paramData (must be even)
+    Word&nbsp;  data&#91;1&#93;;&nbsp; // variable length array of paramData
+} SysPktRPCParamType;
+&nbsp;
+typedef struct SysPktRPCType
+{
+    _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+    Word&nbsp;  trapWord;&nbsp;    // which trap to execute
+    Dword&nbsp; resultD0;&nbsp;    // result from D0 placed here
+    Dword&nbsp; resultA0;&nbsp;    // result from A0 placed here
+    Word&nbsp;  numParams;&nbsp;   // how many parameters follow
+&nbsp;
+    // Following is a variable length array of SysPktRPCParamType's
+    SysPktRPCParamType param&#91;1&#93;;
+} SysPktRPCType;</PRE>
+
+<CENTER><B>Figure 17 - RPC Command</B></CENTER>
+
+<H3><A NAME="Get Trap Conditionals Command"></A>Get Trap Conditionals
+Command (new in 3.0)</H3>
+
+<P>These are used to tell the debugger to conditionally break on a
+trap depending on the value of the first word on the stack. They are
+used when setting a-traps on library calls.</P>
+
+<PRE>#define sysPktGetTrapConditionsCmd&nbsp; 0x14
+#define sysPktGetTrapConditionsRsp&nbsp; 0x94
+&nbsp;
+typedef struct SysPktGetTrapConditionsCmdType
+{
+    _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+} SysPktGetTrapConditionsCmdType;
+&nbsp;
+typedef struct SysPktGetTrapConditionsRspType
+{
+    _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+    Word&nbsp; trapParam&#91;dbgTotalTrapBreaks&#93;;
+} SysPktGetTrapConditionsRspType;</PRE>
+
+<CENTER><B>Figure 18 - Get Trap Conditionals Command</B></CENTER>
+
+<H3><A NAME="Set Trap Conditionals Command"></A>Set Trap Conditionals
+Command (new in 3.0)</H3>
+
+<P>These are used to tell the debugger to conditionally break on a
+trap depending on the value of the first word on the stack. They are
+used when setting a-traps on library calls.</P>
+
+<PRE>#define sysPktSetTrapConditionsCmd&nbsp; 0x15
+#define sysPktSetTrapConditionsRsp&nbsp; 0x95
+&nbsp;
+typedef struct SysPktSetTrapConditionsCmdType
+{
+    _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+    Word&nbsp; trapParam&#91;dbgTotalTrapBreaks&#93;;
+} SysPktSetTrapConditionsCmdType;
+&nbsp;
+typedef struct SysPktSetTrapConditionsRspType
+{
+    _sysPktBodyCommon;&nbsp;&nbsp; // Common Body header
+} SysPktSetTrapConditionsRspType;</PRE>
+
+<CENTER><B>Figure 19 - Set Trap Conditionals Command</B></CENTER>
+
+<P>&nbsp;</P>
+</BODY>
+</HTML>

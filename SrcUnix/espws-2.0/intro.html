@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+	<TITLE>ESP Widget Set for FLTK</TITLE>
+	<META NAME="COPYRIGHT" CONTENT="Copyright 1997-2000">
+	<META NAME="AUTHOR" CONTENT="Easy Software Products">
+	<META NAME="DOCNUMBER" CONTENT="ESPWS-2.0">
+	<LINK REL="STYLESHEET" TYPE="text/css" HREF="fltk.css">
+</HEAD>
+
+<BODY BGCOLOR="#ccccff">
+
+<H1>Introduction</H1>
+
+<P>The ESP Widget Set for FLTK provides check button, file
+chooser, help viewer, and wizard widgets for FLTK. These widgets are
+provided under the terms of the
+<A HREF="http://www.fsf.org/copyleft/gpl.html">GNU General Public
+License</A>.
+
+<P>The widget set comes with a configure script for UNIX systems and
+Visual C++ workspace and project files for Windows systems.
+
+<H2>Compiling the Widget Set under UNIX</H2>
+
+<P>First you must configure the makefile for use on your system; in most
+cases you just need to do:
+
+<UL><PRE>
+% <KBD>./configure <I>ENTER</I></KBD>
+</PRE></UL>
+
+<P>If the configure script is unable to determine what C and C++ compilers
+to use, set the <CODE>CC</CODE> and <CODE>CXX</CODE> environment variables
+to the corresponding program.
+
+<P>The <CODE>CFLAGS</CODE>, <CODE>CXXFLAGS</CODE>, and <CODE>LDFLAGS</CODE>
+environment variables can also be set to tell the compilers and linker
+where to find include files and libraries.
+
+<P>Once you have successfully configured the makefile, just type:
+
+<UL><PRE>
+% <KBD>make <I>ENTER</I></KBD>
+</PRE></UL>
+
+<P>to build the widget set and all the examples.
+
+<H2>Compiling the Widget Set under Windows</H2>
+
+<P>The Visual C++ project file was created using Visual C++ 6.0. We do not
+recommend using older versions of Visual C++.
+
+<P>To build the widget set and all the examples, open the "espws" workspace
+and do a batch build.
+
+</BODY>
+</HTML>

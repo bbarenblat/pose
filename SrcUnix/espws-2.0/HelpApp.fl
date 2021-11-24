@@ -1,0 +1,380 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0008 
+header_name {.h} 
+code_name {.cxx} 
+gridx 5 
+gridy 5 
+snap 3
+class HelpApp {open
+} {
+  decl {static Fl_Menu_Item *bookmenu_;} {}
+  decl {static HelpApp *first_;} {}
+  decl {struct bookmark { char title[256], url[1024]; };} {}
+  decl {static int nbookmarks_;} {}
+  decl {static bookmark *bookmarks_;} {}
+  decl {static int prop_bookmark_;} {}
+  decl {static char homepage_[1024];} {}
+  decl {static char proxy_[1024];} {}
+  decl {int index_;} {}
+  decl {int max_;} {}
+  decl {HelpApp *next_;} {}
+  decl {int line_[100];} {}
+  decl {char file_[100][256];} {}
+  decl {static void add_bookmark(const char *title, const char *url);} {}
+  decl {static const char *link(const char *f);} {}
+  decl {static void load_bookmarks();} {}
+  decl {static void save_bookmarks();} {}
+  decl {static void set_status(const char *format, ...);} {}
+  decl {void back();} {}
+  decl {void forward();} {}
+  decl {void edit_bookmarks();} {}
+  decl {void list_cb(int clicks);} {}
+  decl {void prop_cb();} {}
+  decl {void show_bookmark();} {}
+  Function {HelpApp()} {open
+  } {
+    Fl_Window window_ {
+      label {Help Application} open
+      private xywh {444 35 530 385} hide resizable
+      code0 {\#include <string.h>}
+      code1 {\#include <FL/fl_ask.H>}
+    } {
+      Fl_Group view_ {
+        callback {if (view_->changed())
+{
+  index_ ++;
+
+  if (index_ >= 100)
+  {
+    memcpy(line_, line_ + 10, sizeof(line_[0]) * 90);
+    memcpy(file_, file_ + 10, sizeof(file_[0]) * 90);
+    index_ -= 10;
+  }
+
+  max_ = index_;
+
+  strcpy(file_[index_], view_->filename());
+  line_[index_] = view_->topline();
+
+  if (index_ > 0)
+    back_->activate();
+  else
+    back_->deactivate();
+
+  forward_->deactivate();
+  window_->label(view_->title());
+  location_->value(view_->filename());
+}
+else if (view_->filename())
+{
+  strncpy(file_[index_], view_->filename(), 255);
+  file_[index_][255] = '\\0';
+  line_[index_] = view_->topline();
+}} open
+        private xywh {0 95 530 270} box DOWN_BOX resizable
+        code0 {\#include "HelpView.h"}
+        class HelpView
+      } {}
+      Fl_Box status_ {
+        label {Ready.}
+        private xywh {0 365 530 20} box FLAT_BOX labelsize 12 align 20
+      }
+      Fl_Pack toolbar_ {
+        private xywh {0 25 530 35} type HORIZONTAL
+      } {
+        Fl_Button back_ {
+          label {@-5<-}
+          callback {back();}
+          private xywh {0 25 35 35} box FLAT_BOX down_box THIN_DOWN_BOX shortcut 0xff51 labeltype SYMBOL_LABEL labelcolor 2
+        }
+        Fl_Button forward_ {
+          label {@-5->}
+          callback {forward();}
+          private xywh {35 25 35 35} box FLAT_BOX down_box THIN_DOWN_BOX shortcut 0xff53 labeltype SYMBOL_LABEL labelcolor 2
+        }
+        Fl_Button smaller_ {
+          label F
+          callback {if (view_->textsize() > 8)
+  view_->textsize(view_->textsize() - 2);
+
+if (view_->textsize() <= 8)
+  smaller_->deactivate();
+larger_->activate();}
+          private xywh {70 25 35 35} box FLAT_BOX down_box THIN_DOWN_BOX labelfont 1 labelsize 10
+        }
+        Fl_Button larger_ {
+          label F
+          callback {if (view_->textsize() < 18)
+  view_->textsize(view_->textsize() + 2);
+
+if (view_->textsize() >= 18)
+  larger_->deactivate();
+smaller_->activate();}
+          private xywh {105 25 35 35} box FLAT_BOX down_box THIN_DOWN_BOX labelfont 1 labelsize 16
+        }
+        Fl_Button home_ {
+          label {home.xbm}
+          callback {load(homepage_);}
+          private xywh {140 25 35 35} box FLAT_BOX down_box THIN_DOWN_BOX labeltype image labelfont 1 labelsize 16
+        }
+        Fl_Button reload_ {
+          label {reload.xbm}
+          callback {int top = view_->topline();
+view_->load(location_->value());
+view_->topline(top);}
+          private xywh {175 25 35 35} box FLAT_BOX down_box THIN_DOWN_BOX shortcut 0x40072 labeltype image labelfont 1 labelsize 16 labelcolor 4
+        }
+        Fl_Button stop_ {
+          label {stop.xbm}
+          private xywh {210 25 35 35} box FLAT_BOX down_box THIN_DOWN_BOX shortcut 0xff1b labeltype image labelfont 1 labelsize 16 labelcolor 1 deactivate
+        }
+      }
+      Fl_Menu_Bar menubar_ {open
+        private xywh {0 0 530 25}
+      } {
+        submenu {} {
+          label {&File} open
+          xywh {0 0 100 20}
+        } {
+          menuitem {} {
+            label {&New}
+            callback {new HelpApp;}
+            xywh {0 0 100 20} shortcut 0x4006e
+          }
+          menuitem {} {
+            label {&Open...}
+            xywh {0 0 100 20} shortcut 0x4006f
+          }
+          menuitem {} {
+            label {&Close}
+            callback {window_->hide();}
+            xywh {0 0 100 20} shortcut 0x40077 divider
+          }
+          menuitem {} {
+            label {Set &Home Page}
+            callback {strcpy(homepage_, location_->value());
+save_bookmarks();}
+            xywh {0 0 100 20}
+          }
+          menuitem {} {
+            label {Set &Proxy}
+            callback {const char *proxy;
+
+if ((proxy = fl_input("Enter the URL for the proxy server:", proxy_)) != NULL)
+{
+  strcpy(proxy_, proxy);
+  save_bookmarks();
+}}
+            xywh {10 10 100 20} divider
+          }
+          menuitem {} {
+            label {E&xit}
+            callback {exit(0);}
+            xywh {0 0 100 20} shortcut 0x40071
+            code0 {\#include <stdlib.h>}
+          }
+        }
+        submenu {} {
+          label {&Options} open
+          xywh {0 0 100 20}
+        } {
+          menuitem {} {
+            label {&Toolbar}
+            xywh {0 0 100 20} type Toggle value 1
+          }
+          menuitem {} {
+            label {&Location}
+            xywh {0 0 100 20} type Toggle value 1 divider
+          }
+        }
+        submenu {} {
+          label {&Go} open
+          xywh {0 0 100 20}
+        } {
+          menuitem {} {
+            label {&Back}
+            xywh {0 0 100 20}
+          }
+          menuitem {} {
+            label {&Forward}
+            xywh {0 0 100 20}
+          }
+          menuitem {} {
+            label {&Home}
+            xywh {0 0 100 20}
+          }
+        }
+      }
+      Fl_Group locationbar_ {open
+        private xywh {0 60 530 35} box UP_FRAME
+      } {
+        Fl_Input location_ {
+          label {Location:}
+          callback {load(location_->value());}
+          private xywh {180 65 345 25} when 10 resizable
+        }
+        Fl_Menu_Button bookmark_ {
+          label Bookmarks
+          callback {show_bookmark();} open
+          private xywh {5 65 105 25} box THIN_UP_BOX down_box FLAT_BOX align 20
+        } {
+          menuitem {} {
+            label Add
+            callback {add_bookmark(view_->title(), location_->value());
+save_bookmarks();}
+            xywh {0 0 100 20} shortcut 0x40062
+          }
+          menuitem {} {
+            label {Edit...}
+            callback {edit_bookmarks();}
+            xywh {0 0 100 20} divider
+          }
+        }
+      }
+    }
+    Fl_Window bmWindow_ {
+      label Bookmarks open
+      private xywh {604 456 239 386} hide resizable
+    } {
+      Fl_Browser bmList_ {
+        callback {list_cb(Fl::event_clicks());}
+        private xywh {0 25 240 360} type Multi resizable
+      }
+      Fl_Menu_Bar bmMenubar_ {open
+        private xywh {0 0 240 25}
+      } {
+        submenu {} {
+          label {&Edit} open
+          xywh {0 0 100 20}
+        } {
+          menuitem bmDelete_ {
+            label Delete
+            private xywh {0 0 100 20} shortcut 0xffff
+          }
+          menuitem bmMoveUp_ {
+            label {Move Up} selected
+            private xywh {0 0 100 20} shortcut 0xffbf
+          }
+          menuitem bmMoveDown_ {
+            label {Move Down}
+            private xywh {0 0 100 20} shortcut 0xffc0 divider
+          }
+          menuitem bmProperties_ {
+            label Properties
+            callback {list_cb(1);}
+            private xywh {0 0 100 20} shortcut 0xff0d divider
+          }
+          menuitem {} {
+            label Close
+            callback {bmWindow_->hide();}
+            private xywh {0 0 100 20} shortcut 0x40077
+          }
+        }
+      }
+    }
+    Fl_Window propWindow_ {
+      label {Bookmark Properties} open
+      private xywh {340 68 385 111} hide modal
+    } {
+      Fl_Input propTitle_ {
+        label {Title: }
+        private xywh {50 10 325 25} labelfont 1
+      }
+      Fl_Input propURL_ {
+        label {URL: }
+        private xywh {50 40 325 25} labelfont 1
+      }
+      Fl_Button {} {
+        label Cancel
+        callback {propWindow_->hide();}
+        xywh {310 75 65 25}
+      }
+      Fl_Return_Button {} {
+        label OK
+        callback {prop_cb();
+propWindow_->hide();}
+        xywh {240 75 65 25}
+      }
+    }
+    code {back_->deactivate();
+forward_->deactivate();
+
+index_ = -1;
+max_  = 0;
+next_ = first_;
+first_ = this;
+view_->link(link);
+if (!bookmenu_)
+  load_bookmarks();
+window_->show();
+load(homepage_);} {}
+  }
+  Function {h()} {return_type int
+  } {
+    code {return (window_->h());} {}
+  }
+  Function {hide()} {return_type void
+  } {
+    code {window_->hide();} {}
+  }
+  Function {load(const char *f)} {return_type void
+  } {
+    code {view_->set_changed();
+view_->load(f);
+window_->label(view_->title());} {}
+  }
+  Function {position(int xx, int yy)} {return_type void
+  } {
+    code {window_->position(xx, yy);} {}
+  }
+  Function {resize(int xx, int yy, int ww, int hh)} {return_type void
+  } {
+    code {window_->resize(xx, yy, ww, hh);} {}
+  }
+  Function {show()} {return_type void
+  } {
+    code {window_->show();} {}
+  }
+  Function {textsize(uchar s)} {return_type void
+  } {
+    code {view_->textsize(s);
+
+if (s <= 8)
+  smaller_->deactivate();
+else
+  smaller_->activate();
+
+if (s >= 18)
+  larger_->deactivate();
+else
+  larger_->activate();} {}
+  }
+  Function {textsize()} {return_type uchar
+  } {
+    code {return (view_->textsize());} {}
+  }
+  Function {topline(const char *n)} {return_type void
+  } {
+    code {view_->topline(n);} {}
+  }
+  Function {topline(int n)} {return_type void
+  } {
+    code {view_->topline(n);} {}
+  }
+  Function {visible()} {return_type int
+  } {
+    code {return (window_->visible());} {}
+  }
+  Function {w()} {return_type int
+  } {
+    code {return (window_->w());} {}
+  }
+  Function {x()} {return_type int
+  } {
+    code {return (window_->x());} {}
+  }
+  Function {y()} {return_type int
+  } {
+    code {return (window_->y());} {}
+  }
+} 

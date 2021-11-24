@@ -1,0 +1,71 @@
+========================================================================
+News (latest changes) for the Palm OS Emulator
+Copyright (c) 1999-2001 Palm, Inc. or its subsidiaries.
+All rights reserved.
+
+Please send bug reports, comments, suggestions, etc. to
+<mailto:bug.reports@corp.palm.com>
+========================================================================
+
+========================================================================
+	REVISION HISTORY
+
+	Starting in 2.1d25 (and backdated to 2.1d24) I'm giving credit
+	to the person or people responsible for convincing me to fix a
+	bug or add a feature, in some cases even providing the source code
+	for the bug or feature. These people's names appear in []'s.
+
+	See the file Credits.txt for a list of people who have submitted
+	actual changes to the project.
+========================================================================
+
+
+Changes for 3.5 (2001-03-29)
+----------------------------
+*	Added m125, m130, m515, and i705 support.  NOTE: at the time of
+	this writing, skins for these devices are not available.  There is
+	no estimated date for when they will be available.
+
+*	Enabled TRGpro and HandEra330 support for Mac. [Scott Gruby]
+
+*	Allow access to the following UI data structures in support of
+	PalmOSGlue that comes with SDK 4.0 Update 1 (DR1):
+
+	read/write access to ControlType.attr for CtlGlueNewSliderControl
+	and CtlGlueSetLeftAnchor
+
+	read access to ListType.itemsText for LstGlueGetItemsText
+
+	read access to TableType.numColumns for TblGlueGetColumnMasked
+
+	read access to GraphicControlType.bitmapID and selectedBitmapID for
+	CtlGlueGetGraphics
+
+*	Re-allow read/write access to the text returned by CtlGetLabel,
+	etc. It's OK to read the text, and we'll allow writing to the text
+	until we come up with a better API for altering it. [many]
+
+*	Fixed HostImportFileWithID to return a non-zero ID. [Scott Johnson]
+
+*	Fixed timeout calculations when using redirected send/recieve
+	calls. [many]
+
+*	(Windows) Poser 3.4 de-asserted DTR when opening the host serial
+	port.  Poser 3.5 reverts this change (DTR is asserted when the host
+	serial port is opened). [many]
+
+*	Fixed problem with inability to set/change socket address/port in
+	serial port emulation redirection.  [Mahendra Tailor]
+
+*	(Mac) Better Mac OS X support (Quit menu item now respects
+	preferences regarding save-on-quit, and an idle Poser now gives more
+	time to other running processes).  [Scott Gruby, Christopher Hunt]
+
+*	(Unix) Fix the crawling dialogs (where dialogs appearing quickly in
+	succession march down the screen).  [John Marshall]
+
+*	When hostErrProfilingNotReady was added in Pose 3.1, it was done in
+	such a way as to change the value of hostErrUnknownError.  Re-order
+	those two symbols so that hostErrUnknownError retains its original
+	value (at the expense of changing hostErrProfilingNotReady). [Scott
+	Johnson]

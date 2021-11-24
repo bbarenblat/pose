@@ -1,0 +1,153 @@
+========================================================================
+Build Notes for the Palm OS Emulator
+Copyright (c) 1999-2001 Palm, Inc. or its subsidiaries.
+All rights reserved.
+
+Please send bug reports, comments, suggestions, etc. to
+<mailto:bug.reports@corp.palm.com>
+========================================================================
+
+========================================================================
+Windows
+========================================================================
+To build the Palm OS Emulator under Windows, you will need Visual C++
+6.0.  The Emulator runs under Windows 95, Windows 98, Window ME, Windows
+NT 4.0, Window 2000, and Windows XP, so you should be able to build
+under those environments, too.
+
+To build, simply load the workspace (Emulator.dsw) or project
+(Emulator.dsp) from the BuildWin directory, select the project target
+(you'll mostly likely be interested in building "Win32 Release"), and
+select the the "Build/Build Emulator.exe" menu item.  For that target,
+the resulting executable will end up in
+".../BuildWin/Release/Emulator.exe".
+
+If you want to build the ROM Transfer Palm OS application, you will need
+CodeWarrior for Palm OS Release 7.
+
+========================================================================
+Macintosh
+========================================================================
+To build the Palm OS Emulator under Mac OS, you will need CodeWarrior
+Pro 7.0.
+
+To build, simply load the project Emulator.mcp in the BuildMac folder,
+select the project target (you'll mostly likely be interested in
+building "POSER PPC"), and select the the "Make" menu item.  For that
+target, the resulting executable will end up in "...:BuildMac:Built:Palm
+OS Emulator".
+
+If you want to build the ROM Transfer Palm OS application, you will need
+CodeWarrior for Palm OS Release 7.
+
+========================================================================
+Unix
+========================================================================
+
+(A cool HOWTO by Jan Schaumann can be found at:
+
+    <http://www.netmeister.org/palm/POSE/POSE-HOWTO.html>)
+
+Palm OS Emulator for Unix has been built on a number of platforms, but
+the one it's developed under is RedHat Linux 6.0 (kernel 2.2.5,
+glibc-devel 2.1.1-6 using XFree86 3.3.3.1-49 running a 16 bit display).
+People have also built it under SuSe Linux, Solaris 2.6 and 2.7,
+FreeBSD, Debian, and QNX Neutrino, so you may have luck under those or
+other environments.  Developers using RedHat Linux 7.0 need to make sure
+that they have the gcc compiler patch from RedHat.
+
+    <http://www.redhat.com/support/errata/rh7-errata-bugfixes.html>
+
+We use pthreads, so you need GNU glibc2 (aka Linux libc6) C library and
+a 2.x kernel on a Linux system.  Other operating systems need to support
+true threads.
+
+The source makes heavy use of C++ templates and exceptions.  On Linux,
+you must have egcs-1.1.1 or better to compile it.  egcs-1.1 or any gcc
+below 2.95 may not work.  RedHat Linux 6.0 comes with egcs 1.1.2, so you
+should be OK there.  If you are running RedHat Linux 5.2, you will need
+to download the latest from <http://egcs.cygnus.com> and build it.  For
+other OS'es, either use egcs, or be sure your compiler supports these
+C++ features.
+
+Note that egcs needs to be built with the HANDLE_SYSV_PRAGMA option
+turned on in order to have the support to pack structures correctly. The
+Linux version of egcs has this turned on, but other variants -- such as
+the compiler that comes with FreeBSD -- may not.  If you're using gcc
+2.95 or later, make sure it was compiled with the HANDLE_PRAGMA_PACK
+option.
+
+Sparc note: the Sparc assembler doesn't seem able to handle the mangled
+C++ names emitted by GCC.  You may have to follow the instructions in
+the GCC FAQ "How to work around too long C++ symbol names?"
+
+Some versions of Linux are included with a version of gcc that cannot
+correctly compile the emulator.  It has a code generation bug that
+causes the emulator to crash on startup.  If you have gcc 2.96 or 2.97,
+you probably have a version with the bug.  Our configure script
+attempts to detect compilers with the bug and invokes some workarounds
+if it finds one.  If those workarounds don't appear to be working for
+you, you may want to revert to gcc 2.95.x or upgrade to gcc 3.0.x.  Here
+are instructions from one developer:
+
+    What I did was compile gcc 2.95.3 --prefix=/usr/local/gcc2953 (ie, I
+    didn't destroy the 2.96 conpiler). Using that compiler (export
+    CC=/usr/local/gcc2953/bin/gcc, CXX=/usr/local/gcc2953/bin/g++), I
+    built glibc-2.2.2 and installed that in /usr/local. After that
+    completed, I put /usr/local/lib at the head of the search list in
+    /etc/ld.so.conf and rebooted. Then I compiled fltk and the emulator.
+    This time it worked. It may not be necessary to build the libraries
+    -- All I know is that it worked!
+
+We use the FLTK X toolkit.  I'm not going to get into an X GUI Toolkit
+religious war, so don't ask why not some other toolkit.  You are
+encouraged to add support for other toolkits, like Qt or GTK+ or even
+Xt.  I have tried to keep all of the FLTK code in the Em*Fltk.cpp files.
+If you add support for another toolkit, please follow that pattern.
+Don't pollute the UNIX-generic code with toolkit specific code.  FLTK is
+available from <http://www.fltk.org>, is a quick download, and is easy
+to build on a variety of OS'es.  We've tested with the binary install
+RPMs for 1.0.3 and 1.0.4, as well as the source install of 1.0.5 and
+1.0.7.  "fluid" (the FLTK User Interface Design tool) is part of the
+build, so make sure it gets installed, too.
+
+    NOTE: Not all FLTK's install the same way.  Some install their
+          includes in an "Fl" directory, some install their includes in
+          an "FL" directory.  The emulator is written to look for them
+          in "FL".  If you don't have that directory, you may need to
+          create a symbolic link with that name to "Fl".
+
+          Additionally, the Emulator's build script expects libfltk.a to
+          be installed in /usr/lib or /usr/local/lib.  If you've
+          installed it elsewhere, use the --with-fltk=DIR configure
+          flag.  The directory you specify will be used as the prefix
+          for additional "include" and "lib" dirs to search.
+
+    NOTE: Many users have compiled against FLTK 1.0.11 with no
+          apparent problems, so using that version instead of 1.0.7
+          should be OK.  FLTK 1.1.0 (in beta at the time of this
+          writing) is only minimally supported.  Emulator 3.5 includes
+          initial support for this version of FLTK, but little testing
+          has been performed.  Our confidence is high that there are no
+          problems, but your mileage may vary.
+
+To build the Emulator, first build and/or install FLTK.  Doing this
+first is very important.  Otherwise, the Emulator's build script won't
+find it.  After that, switch to the BuildUnix directory and execute
+the following commands:
+
+     ./configure
+     make
+
+You will end up with an application called "pose" that you can run.
+
+If you want, the "configure" script understands the following command-
+line switches:
+
+  --enable-palm-profile   Include support for profiling Palm applications
+  --enable-profile        Include support for profiling Poser itself
+  --enable-debug          Include debugging symbols.  This option also
+                          turns on palm-profile, turns off profile, and
+                          compiles the source code without optimizations.
+  --enable-static-link    static link; no shared libraries (default no).
+  --with-fltk=DIR         Use the fltk which is installed on DIR.

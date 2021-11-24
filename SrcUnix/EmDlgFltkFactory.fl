@@ -1,0 +1,1157 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.00 
+header_name {.h} 
+code_name {.cpp} 
+gridx 5 
+gridy 5 
+snap 3
+Function {PrvMakeROMTransferQueryDialog()} {} {
+  Fl_Window {} {
+    label {ROM Transfer}
+    xywh {752 584 520 400} labelsize 12 hide
+    code0 {\#include "EmCommon.h"}
+    code1 {\#include "EmDlgFltk.h"}
+    code2 {\#include "Platform.h"} modal
+  } {
+    Fl_Return_Button {} {
+      label Begin
+      xywh {330 355 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {420 355 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Scroll {} {
+      label {Instructions:}
+      xywh {20 30 480 290} type VERTICAL box DOWN_FRAME labelsize 12 align 5
+    } {
+      Fl_Box {} {
+        xywh {22 32 476 550} labelsize 12 align 149
+        code0 {::PrvSetWidgetID (o, kDlgItemDlqInstructions);}
+      }
+    }
+    Fl_Input {} {
+      label {Port:}
+      xywh {60 330 130 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDlqPortList);}
+    }
+    Fl_Choice {} {
+      label {Baud:}
+      xywh {60 360 130 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDlqBaudList);}
+    } {}
+  }
+} 
+
+Function {PrvMakeROMTransferProgressDialog()} {} {
+  Fl_Window {} {
+    label Progress
+    xywh {190 593 300 115} labelsize 12 hide
+  } {
+    Fl_Return_Button {} {
+      label Cancel
+      xywh {105 70 90 25} shortcut 0xff1b labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Box {} {
+      label {Waiting...}
+      xywh {20 15 280 20} box FLAT_BOX labelsize 12 align 21
+      code0 {::PrvSetWidgetID (o, kDlgItemDlpMessage);}
+    }
+    Fl_Slider {} {
+      xywh {20 40 260 15} type {Horz Fill} labeltype NO_LABEL labelsize 12 maximum 20 value 5
+      code0 {::PrvSetWidgetID (o, kDlgItemDlpProgress);}
+    }
+  }
+} 
+
+Function {PrvMakeNewHordeDialog()} {} {
+  Fl_Window {} {
+    label {New Gremlin Horde}
+    xywh {86 192 410 460} labelsize 12 hide modal
+  } {
+    Fl_Return_Button {} {
+      label OK
+      xywh {220 415 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {310 415 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Button {} {
+      label {Logging Options...}
+      xywh {20 415 125 25} labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemHrdLogging);}
+    }
+    Fl_Group {} {
+      label {Gremlin range}
+      xywh {20 25 370 100} box THIN_DOWN_FRAME labelsize 12 align 5
+    } {
+      Fl_Input {} {
+        label {From:}
+        xywh {60 35 55 20} labelsize 12 textsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemHrdStart);}
+      }
+      Fl_Input {} {
+        label {To:}
+        xywh {60 65 55 20} labelsize 12 textsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemHrdStop);}
+      }
+      Fl_Round_Button {} {
+        label {Switch after}
+        xywh {145 35 85 20} down_box DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemHrdCheckSwitch);}
+      }
+      Fl_Round_Button {} {
+        label {Save after}
+        xywh {145 65 85 20} down_box DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemHrdCheckSave);}
+      }
+      Fl_Round_Button {} {
+        label {Stop after}
+        xywh {145 95 85 20} down_box DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemHrdCheckStop);}
+      }
+      Fl_Input {} {
+        label events
+        xywh {235 35 100 20} type Int labelsize 12 align 8 when 0 textsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemHrdDepthSwitch);}
+      }
+      Fl_Input {} {
+        label events
+        xywh {235 65 100 20} type Int labelsize 12 align 8 when 0 textsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemHrdDepthSave);}
+      }
+      Fl_Input {} {
+        label events
+        xywh {235 95 100 20} type Int labelsize 12 align 8 when 0 textsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemHrdDepthStop);}
+      }
+    }
+    Fl_Group {} {
+      label Applications
+      xywh {20 150 370 250} box THIN_DOWN_FRAME labelsize 12 align 5
+    } {
+      Fl_Browser {} {
+        label {Choose applications to launch:}
+        xywh {30 174 170 216} type Multi labelsize 12 align 5 textsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemHrdAppList);}
+      }
+      Fl_Choice {} {
+        label {Choose which to launch first:} open
+        xywh {210 175 165 25} labelsize 12 align 5 textsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemHrdFirstLaunchedApp);}
+      } {}
+      Fl_Button {} {
+        label {Select All}
+        xywh {210 225 90 25} labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemHrdSelectAll);}
+      }
+      Fl_Button {} {
+        label Deselect
+        xywh {210 260 90 25} labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemHrdSelectNone);}
+      }
+    }
+  }
+} 
+
+Function {PrvMakeEditSkinsDialog()} {} {
+  Fl_Window {} {
+    label Skins
+    xywh {897 266 300 280} labelsize 12 hide modal
+  } {
+    Fl_Return_Button {} {
+      label OK
+      xywh {110 235 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {200 235 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Browser {} {
+      label {Skins for current device:}
+      xywh {20 25 260 100} type Hold labelsize 12 align 5 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemSknSkinList);}
+    }
+    Fl_Group {} {
+      label {Other options}
+      xywh {20 150 260 70} box ENGRAVED_FRAME labelsize 12 align 5
+    } {
+      Fl_Check_Button {} {
+        label {Double scale}
+        xywh {25 155 160 20} down_box DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemSknDoubleScale);}
+      }
+      Fl_Check_Button {} {
+        label {White background}
+        xywh {25 175 160 20} down_box DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemSknWhiteBackground);}
+      }
+      Fl_Check_Button {} {
+        label {Dim skin when inactive}
+        xywh {25 195 160 20} down_box DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemSknDim);}
+      }
+    }
+  }
+} 
+
+Function {PrvMakeEditLoggingOptionsDialog()} {} {
+  Fl_Window {} {
+    label {Logging Options}
+    xywh {53 135 405 275} labelsize 12 hide modal
+  } {
+    Fl_Return_Button {} {
+      label OK
+      xywh {215 230 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {305 230 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Group {} {
+      xywh {245 5 140 25} labelsize 12
+    } {
+      Fl_Round_Button {} {
+        label Normal
+        xywh {245 5 65 20} type Radio down_box ROUND_DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemLogNormal);}
+      }
+      Fl_Round_Button {} {
+        label Gremlins
+        xywh {310 5 75 20} type Radio down_box ROUND_DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemLogGremlins);}
+      }
+    }
+    Fl_Box {} {
+      label {Log:}
+      xywh {20 25 365 185} box THIN_DOWN_BOX labelsize 12 align 5
+    }
+    Fl_Check_Button {} {
+      label {Error messages}
+      xywh {25 30 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogErrorMessages);}
+    }
+    Fl_Check_Button {} {
+      label {Warning messages}
+      xywh {25 45 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogWarningMessages);}
+    }
+    Fl_Check_Button {} {
+      label {Misc Gremlin info}
+      xywh {25 60 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogGremlins);}
+    }
+    Fl_Check_Button {} {
+      label {Assembly opcodes}
+      xywh {25 75 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogCPUOpcodes);}
+    }
+    Fl_Check_Button {} {
+      label {Posted events}
+      xywh {210 30 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogEnqueuedEvents);}
+    }
+    Fl_Check_Button {} {
+      label {Received events}
+      xywh {210 45 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogDequeuedEvents);}
+    }
+    Fl_Check_Button {} {
+      label {System calls}
+      xywh {210 60 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogSystemCalls);}
+    }
+    Fl_Check_Button {} {
+      label {Application calls}
+      xywh {210 75 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogApplicationCalls);}
+    }
+    Fl_Check_Button {} {
+      label {Serial activity}
+      xywh {25 110 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogSerial);}
+    }
+    Fl_Check_Button {} {
+      label {Serial data}
+      xywh {210 110 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogSerialData);}
+    }
+    Fl_Check_Button {} {
+      label {NetLib activity}
+      xywh {25 125 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogNetLib);}
+    }
+    Fl_Check_Button {} {
+      label {NetLib data}
+      xywh {210 125 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogNetLibData);}
+    }
+    Fl_Check_Button {} {
+      label {ExgMgr activity}
+      xywh {25 140 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogExgMgr);}
+    }
+    Fl_Check_Button {} {
+      label {ExgMgr data}
+      xywh {210 140 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogExgMgrData);}
+    }
+    Fl_Check_Button {} {
+      label {RPC activity}
+      xywh {25 155 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogRPC);}
+    }
+    Fl_Check_Button {} {
+      label {RPC data}
+      xywh {210 155 145 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogRPCData);}
+    }
+    Fl_Check_Button {} {
+      label {High-level debugger activity}
+      xywh {25 170 185 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogHLDebugger);}
+    }
+    Fl_Check_Button {} {
+      label {High-level debugger data}
+      xywh {210 170 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogHLDebuggerData);}
+    }
+    Fl_Check_Button {} {
+      label {Low-level debugger activity}
+      xywh {25 185 185 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogLLDebugger);}
+    }
+    Fl_Check_Button {} {
+      label {Low-level debugger data}
+      xywh {210 185 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemLogLogLLDebuggerData);}
+    }
+  }
+} 
+
+Function {PrvMakeSessionNewDialog()} {} {
+  Fl_Window {} {
+    label {New Session}
+    xywh {942 412 280 170} labelsize 12 hide modal
+  } {
+    Fl_Return_Button {} {
+      label OK
+      xywh {90 125 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {180 125 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Choice {} {
+      label {ROM file:}
+      xywh {80 15 180 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemNewROM);}
+    } {}
+    Fl_Choice {} {
+      label {Device:}
+      xywh {80 40 180 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemNewDevice);}
+    } {}
+    Fl_Choice {} {
+      label {Skin:}
+      xywh {80 65 180 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemNewSkin);}
+    } {}
+    Fl_Choice {} {
+      label {RAM size:}
+      xywh {80 90 180 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemNewMemorySize);}
+    } {}
+  }
+} 
+
+Function {PrvMakeHostFSOptionsDialog()} {} {
+  Fl_Window {} {
+    label {HostFS Options}
+    xywh {850 280 330 220} labelsize 12 hide modal
+  } {
+    Fl_Return_Button {} {
+      label OK
+      xywh {140 175 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {230 175 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Browser {} {
+      label Slot
+      xywh {20 30 65 125} type Hold labelsize 12 align 5 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemHfsList);}
+    }
+    Fl_Output {} {
+      label {Root path}
+      xywh {95 30 215 95} type Multiline labelsize 12 align 5 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemHfsPath);}
+    }
+    Fl_Check_Button {} {
+      label Mounted
+      xywh {95 135 85 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemHfsMounted);}
+    }
+    Fl_Button {} {
+      label Browse
+      xywh {230 135 80 20} labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemHfsBrowse);}
+    }
+  }
+} 
+
+Function {PrvMakeDatabaseImportDialog()} {} {
+  Fl_Window {} {
+    label Install
+    xywh {674 242 290 90} labelsize 12 hide modal
+  } {
+    Fl_Box {} {
+      label {Items remaining to be installed:}
+      xywh {20 15 200 20} labelsize 12 align 20
+    }
+    Fl_Box {} {
+      label 999
+      xywh {225 15 45 20} labelsize 12 align 24
+      code0 {::PrvSetWidgetID (o, kDlgItemImpNumFiles);}
+    }
+    Fl_Slider {} {
+      xywh {20 50 175 15} type {Horz Fill} labelsize 12 maximum 10 step 1 value 7
+      code0 {::PrvSetWidgetID (o, kDlgItemImpProgress);}
+    }
+    Fl_Button {} {
+      label Stop
+      xywh {210 45 60 25} shortcut 0xff1b labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+  }
+} 
+
+Function {PrvMakeCommonDialog()} {} {
+  Fl_Window {} {
+    label {Palm OS Emulator}
+    xywh {211 257 380 150} hide modal
+  } {
+    Fl_Button {} {
+      label Continue
+      xywh {280 105 80 25} labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCmnButton1);}
+      class Fl_Push_Button
+    }
+    Fl_Button {} {
+      label Debug
+      xywh {190 105 80 25} labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCmnButton2);}
+      class Fl_Push_Button
+    }
+    Fl_Button {} {
+      label {Reset...}
+      xywh {100 105 80 25} labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCmnButton3);}
+      class Fl_Push_Button
+    }
+    Fl_Output {} {
+      xywh {20 15 340 75} type Multiline labelsize 12 align 0 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCmnText);}
+      code1 {Fl_Group::current ()->resizable (o);}
+    }
+  }
+} 
+
+Function {PrvMakeEditDebuggingOptionsDialog()} {} {
+  Fl_Window {} {
+    label {Debug Options}
+    xywh {76 97 415 357} labelsize 12 hide modal
+  } {
+    Fl_Return_Button {} {
+      label OK
+      xywh {225 315 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {315 315 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Box {} {
+      label Checks
+      xywh {20 30 375 200} box ENGRAVED_FRAME labelsize 12 align 5
+    }
+    Fl_Check_Button {} {
+      label {Free chunk access}
+      xywh {30 40 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportFreeChunkAccess);}
+    }
+    Fl_Check_Button {} {
+      label {Hardware register access}
+      xywh {30 60 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportHardwareRegisterAccess);}
+    }
+    Fl_Check_Button {} {
+      label {Low memory access}
+      xywh {30 80 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportLowMemoryAccess);}
+    }
+    Fl_Check_Button {} {
+      label {Low stack access}
+      xywh {30 100 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportLowStackAccess);}
+    }
+    Fl_Check_Button {} {
+      label {MemMgr data access}
+      xywh {30 120 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportMemMgrDataAccess);}
+    }
+    Fl_Check_Button {} {
+      label {MemMgr leaks}
+      xywh {30 140 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportMemMgrLeaks);}
+    }
+    Fl_Check_Button {} {
+      label {MemMgr semaphore}
+      xywh {30 160 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportMemMgrSemaphore);}
+    }
+    Fl_Check_Button {} {
+      label {Offscreen form object}
+      xywh {30 180 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportOffscreenObject);}
+    }
+    Fl_Check_Button {} {
+      label {Overlay errors}
+      xywh {30 200 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportOverlayErrors);}
+    }
+    Fl_Check_Button {} {
+      label {Proscribed function call}
+      xywh {220 40 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportProscribedFunction);}
+    }
+    Fl_Check_Button {} {
+      label {ROM access}
+      xywh {220 60 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportROMAccess);}
+    }
+    Fl_Check_Button {} {
+      label {Screen access}
+      xywh {220 80 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportScreenAccess);}
+    }
+    Fl_Check_Button {} {
+      label {Sizeless form object}
+      xywh {220 100 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportSizelessObject);}
+    }
+    Fl_Check_Button {} {
+      label {Stack almost full}
+      xywh {220 120 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportStackAlmostOverflow);}
+    }
+    Fl_Check_Button {} {
+      label {Strict International checks}
+      xywh {220 140 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportStrictIntlChecks);}
+    }
+    Fl_Check_Button {} {
+      label {System global access}
+      xywh {220 160 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportSystemGlobalAccess);}
+    }
+    Fl_Check_Button {} {
+      label {UIMgr data access}
+      xywh {220 180 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportUIMgrDataAccess);}
+    }
+    Fl_Check_Button {} {
+      label {Unlocked chunk access}
+      xywh {220 200 170 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgReportUnlockedChunkAccess);}
+    }
+    Fl_Box {} {
+      label {Dialog handling}
+      xywh {20 255 375 40} box ENGRAVED_FRAME labelsize 12 align 5
+    }
+    Fl_Check_Button {} {
+      label {Beep every 2 seconds when a dialog box is displayed}
+      xywh {30 265 335 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemDbgDialogBeep);}
+    }
+  }
+} 
+
+Function {PrvMakeEditBreakpointsDialog()} {} {
+  Fl_Window {} {
+    label Breakpoints
+    xywh {899 137 290 330} labelsize 12 hide modal
+  } {
+    Fl_Return_Button {} {
+      label OK
+      xywh {100 290 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {190 290 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Group {} {
+      label {Code breakpoints}
+      xywh {20 25 250 140} box ENGRAVED_BOX labelsize 12 align 5
+    } {
+      Fl_Browser {} {
+        xywh {30 35 230 90} type Hold labelsize 12 align 0 textsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemBrkList);}
+      }
+      Fl_Button {} {
+        label Edit
+        xywh {50 135 55 20} labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemBrkButtonEdit);}
+      }
+      Fl_Button {} {
+        label Clear
+        xywh {175 135 55 20} labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemBrkButtonClear);}
+      }
+    }
+    Fl_Group {} {
+      label {Data breakpoints}
+      xywh {20 190 250 90} box ENGRAVED_BOX labelsize 12 align 5
+    } {
+      Fl_Check_Button {} {
+        label Enabled
+        xywh {30 200 80 20} down_box DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemBrkCheckEnabled);}
+      }
+      Fl_Input {} {
+        label {Start address:}
+        xywh {130 225 130 20} labelsize 12 textsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemBrkStartAddress);}
+      }
+      Fl_Input {} {
+        label {Number of bytes:}
+        xywh {130 250 130 20} labelsize 12 textsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemBrkNumberOfBytes);}
+      }
+    }
+  }
+} 
+
+Function {PrvMakeEditCodeBreakpointDialog()} {} {
+  Fl_Window {} {
+    label {Code Breakpoint}
+    xywh {680 176 260 120} labelsize 12 hide modal
+  } {
+    Fl_Return_Button {} {
+      label OK
+      xywh {70 75 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {160 75 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Input {} {
+      label {Address:}
+      xywh {75 15 165 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemBrkAddress);}
+    }
+    Fl_Input {} {
+      label {Condition:}
+      xywh {75 40 165 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemBrkCondition);}
+    }
+  }
+} 
+
+Function {PrvMakeDatabaseExportDialog()} {} {
+  Fl_Window {} {
+    label {Export Database}
+    xywh {643 135 260 385} labelsize 12 hide modal
+  } {
+    Fl_Return_Button {} {
+      label OK
+      xywh {70 340 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {160 340 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Browser {} {
+      label {Choose database to export:}
+      xywh {20 25 220 300} type Hold box DOWN_BOX labelsize 12 align 5 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemExpDbList);}
+    }
+  }
+} 
+
+Function {PrvMakeEditPreferencesDialog()} {} {
+  Fl_Window {} {
+    label Preferences
+    xywh {251 186 270 417} labelsize 12 hide modal
+  } {
+    Fl_Return_Button {} {
+      label OK
+      xywh {80 375 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {170 375 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Box {} {
+      label Communications
+      xywh {20 25 230 120} box THIN_DOWN_BOX labelsize 12 align 5
+    }
+    Fl_Input {} {
+      label {Serial port:}
+      xywh {90 35 150 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemPrfRedirectSerial);}
+    }
+    Fl_Input {} {
+      label {IR port:}
+      xywh {90 60 150 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemPrfRedirectIR);}
+    }
+    Fl_Input {} {
+      label {Mystery:}
+      xywh {90 85 150 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemPrfRedirectMystery);}
+    }
+    Fl_Check_Button {} {
+      label {Redirect NetLib calls to Host TCP/IP}
+      xywh {25 115 215 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemPrfRedirectNetLib);}
+    }
+    Fl_Box {} {
+      label Sounds
+      xywh {20 180 230 30} box THIN_DOWN_BOX labelsize 12 align 5
+    }
+    Fl_Check_Button {} {
+      label {Enable sound}
+      xywh {25 185 150 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemPrfEnableSound);}
+    }
+    Fl_Box {} {
+      label {Closing / Quitting}
+      xywh {20 235 230 70} box THIN_DOWN_BOX labelsize 12 align 5
+    }
+    Fl_Group {} {
+      xywh {25 240 150 60}
+    } {
+      Fl_Round_Button {} {
+        label {Always save session}
+        xywh {25 240 150 20} type Radio down_box ROUND_DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemPrfSaveAlways);}
+      }
+      Fl_Round_Button {} {
+        label {Ask to save session}
+        xywh {25 260 150 20} type Radio down_box ROUND_DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemPrfSaveAsk);}
+      }
+      Fl_Round_Button {} {
+        label {Never save session}
+        xywh {25 280 150 20} type Radio down_box ROUND_DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemPrfSaveNever);}
+      }
+    }
+    Fl_Box {} {
+      label {HotSync user name}
+      xywh {20 330 230 30} box THIN_DOWN_BOX labelsize 12 align 5
+    }
+    Fl_Input {} {
+      xywh {25 335 220 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemPrfUserName);}
+    }
+  }
+} 
+
+Function {PrvMakeEditTracingOptionsDialog()} {} {
+  Fl_Window {} {
+    label {Tracing Options}
+    xywh {656 88 203 100} labelsize 12 hide modal
+  } {}
+} 
+
+Function {PrvMakeResetDialog()} {} {
+  Fl_Window {} {
+    label Reset
+    xywh {446 151 480 305} labelsize 12 hide
+  } {
+    Fl_Return_Button {} {
+      label Reset
+      xywh {290 260 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {380 260 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Group {} {
+      xywh {20 14 120 106} labelsize 12
+    } {
+      Fl_Round_Button {} {
+        label {Soft reset}
+        xywh {20 15 105 20} type Radio down_box ROUND_DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemRstSoft);}
+      }
+      Fl_Round_Button {} {
+        label {Hard reset}
+        xywh {20 55 105 20} type Radio down_box ROUND_DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemRstHard);}
+      }
+      Fl_Round_Button {} {
+        label {Debug reset}
+        xywh {20 95 105 20} type Radio down_box ROUND_DOWN_BOX labelsize 12
+        code0 {::PrvSetWidgetID (o, kDlgItemRstDebug);}
+      }
+    }
+    Fl_Box {} {
+      xywh {20 157 440 3} box THIN_UP_BOX labelsize 12
+    }
+    Fl_Check_Button {} {
+      label {No extensions}
+      xywh {20 175 105 20} down_box DOWN_BOX labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemRstNoExt);}
+    }
+    Fl_Box {} {
+      label {This is the same as inserting a pin in the reset hole on a device.  It performs a standard reset.}
+      xywh {130 15 330 35} labelsize 12 align 149
+    }
+    Fl_Box {} {
+      label {This is the same as a Soft Reset while holding down the Power key.  It erases the storage heap.}
+      xywh {130 55 330 35} labelsize 12 align 149
+    }
+    Fl_Box {} {
+      label {This is the same as a Soft Reset while holding down the Page Down key.  It causes the ROM to execute a DbgBreak early in the boot sequence.}
+      xywh {130 95 330 50} labelsize 12 align 149
+    }
+    Fl_Box {} {
+      label {This is the same as a Soft Reset while holding down the Page Up key.  It skips the loading of extensions, patches, and certain libraries, as well as inhibiting the sending of sysAppLaunchCmdSystemReset to applications.}
+      xywh {130 175 330 65} labelsize 12 align 149
+    }
+  }
+} 
+
+Function {PrvMakeSessionInfoDialog()} {} {
+  Fl_Window {} {
+    label {Session Info}
+    xywh {638 44 414 212} labelsize 12 hide
+  } {
+    Fl_Return_Button {} {
+      label OK
+      xywh {310 165 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Box {} {
+      label {Device name:}
+      xywh {25 25 105 30} labelsize 12 align 21
+    }
+    Fl_Box {} {
+      label {RAM size}
+      xywh {25 55 105 30} labelsize 12 align 21
+    }
+    Fl_Box {} {
+      label {ROM file path:}
+      xywh {25 85 105 30} labelsize 12 align 21
+    }
+    Fl_Box {} {
+      label {Session file path:}
+      xywh {25 115 105 30} labelsize 12 align 21
+    }
+    Fl_Box {} {
+      label {<Device Name>}
+      xywh {135 25 255 30} labelsize 12 align 21
+      code0 {::PrvSetWidgetID (o, kDlgItemInfDeviceFld);}
+    }
+    Fl_Box {} {
+      label {<RAM Size>}
+      xywh {135 55 255 30} labelsize 12 align 21
+      code0 {::PrvSetWidgetID (o, kDlgItemInfRAMFld);}
+    }
+    Fl_Box {} {
+      label {<ROM file>}
+      xywh {135 85 255 30} labelsize 12 align 213
+      code0 {::PrvSetWidgetID (o, kDlgItemInfROMFld);}
+    }
+    Fl_Box {} {
+      label {<Session file>}
+      xywh {135 115 255 30} labelsize 12 align 213
+      code0 {::PrvSetWidgetID (o, kDlgItemInfSessionFld);}
+    }
+  }
+} 
+
+Function {PrvMakeGremlinControlDialog()} {} {
+  Fl_Window {} {
+    label {Gremlin Control}
+    xywh {654 76 326 109} labelsize 12 hide
+  } {
+    Fl_Box {} {
+      label {Event: 0,000,000 of 0,000,000}
+      xywh {15 15 185 20} labelsize 12 align 21
+      code0 {::PrvSetWidgetID (o, kDlgItemGrmEventNumber);}
+    }
+    Fl_Box {} {
+      label {Gremlin \#000}
+      xywh {215 15 95 20} labelsize 12 align 25
+      code0 {::PrvSetWidgetID (o, kDlgItemGrmNumber);}
+    }
+    Fl_Box {} {
+      label {Elapsed time: 0,000,000.00 seconds}
+      xywh {15 40 225 20} labelsize 12 align 21
+      code0 {::PrvSetWidgetID (o, kDlgItemGrmElapsedTime);}
+    }
+    Fl_Button {} {
+      label Stop
+      xywh {15 70 65 25} labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemGrmStop);}
+    }
+    Fl_Button {} {
+      label Resume
+      xywh {135 70 65 25} labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemGrmResume);}
+    }
+    Fl_Button {} {
+      label Step
+      xywh {245 70 65 25} labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemGrmStep);}
+    }
+  }
+} 
+
+Function {PrvMakeEditErrorHandlingDialog()} {} {
+  Fl_Window {} {
+    label {Error Handling}
+    xywh {110 117 394 318} labelsize 12 hide modal
+  } {
+    Fl_Return_Button {} {
+      label OK
+      xywh {190 270 80 25} labelsize 12 hotspot
+      code0 {::PrvSetWidgetID (o, kDlgItemOK);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {290 270 80 25} shortcut 0xff1b labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+    Fl_Box {} {
+      label {If Gremlins is off:}
+      xywh {20 30 350 90} box ENGRAVED_FRAME labelsize 12 align 5
+    }
+    Fl_Choice {} {
+      label {On warnings:}
+      xywh {115 45 225 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemErrWarningOff);}
+    } {}
+    Fl_Choice {} {
+      label {On errors:}
+      xywh {115 80 225 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemErrErrorOff);}
+    } {}
+    Fl_Box {} {
+      label {If Gremlins is on:}
+      xywh {20 160 350 90} box ENGRAVED_FRAME labelsize 12 align 5
+    }
+    Fl_Choice {} {
+      label {On warnings:}
+      xywh {115 175 225 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemErrWarningOn);}
+    } {}
+    Fl_Choice {} {
+      label {On errors:}
+      xywh {115 210 225 20} labelsize 12 textsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemErrErrorOn);}
+    } {}
+  }
+} 
+
+Function {PrvMakeAboutDialog()} {} {
+  Fl_Window {} {
+    label {About Palm OS(R) Emulator}
+    xywh {124 348 362 231} hide
+    code0 {\#include <FL/Fl_Pixmap.H>}
+    code1 {\#include "poser.xpm"} modal
+  } {
+    Fl_Return_Button {} {
+      label OK
+      user_data 1
+      callback modalCallback
+      xywh {280 197 75 25} labelsize 12
+    }
+    Fl_Box {} {
+      xywh {10 15 50 60}
+      code0 {Fl_Pixmap* p = new Fl_Pixmap (poser_xpm);}
+      code1 {p->label (o);}
+    }
+    Fl_Tabs {} {
+      xywh {70 10 285 180}
+    } {
+      Fl_Group {} {
+        label Palm
+        xywh {95 35 260 155} labelsize 12 hide
+        code0 {o->show ();}
+      } {
+        Fl_Box {} {
+          label Version
+          xywh {100 45 240 20} labelfont 1 labelsize 12 align 21
+          code0 {static string versionStr;}
+          code1 {versionStr = string ("Palm OS Emulator Version ") + Platform::GetShortVersionString();}
+          code2 {o->label (versionStr.c_str ());}
+        }
+        Fl_Box {} {
+          label {Copyright (c) 1998-2001 Palm, Inc.}
+          xywh {100 70 240 15} labelsize 10 align 21
+        }
+        Fl_Button {} {
+          label {<http://www.palmos.com>}
+          callback openURL
+          xywh {100 105 125 15} box FLAT_BOX selection_color 2 labelsize 10 labelcolor 4 align 21
+        }
+        Fl_Button {} {
+          label {<mailto:bug.reports@corp.palm.com>}
+          callback openURL
+          xywh {100 120 175 15} box FLAT_BOX selection_color 2 labelsize 10 labelcolor 4 align 21
+        }
+        Fl_Box {} {
+          label {Download the latest version from:}
+          xywh {100 140 165 15} labelsize 10 align 21
+        }
+        Fl_Button {} {
+          label {<http://www.palmos.com/dev/tech/tools/emulator>}
+          callback openURL
+          xywh {100 155 235 15} box FLAT_BOX selection_color 2 labelsize 10 labelcolor 4 align 21
+        }
+      }
+      Fl_Group {} {
+        label Windows
+        xywh {95 35 260 155} labelsize 12 hide
+      } {
+        Fl_Box {} {
+          label {Original Windows Copilot by Greg Hewgill}
+          xywh {100 55 240 15} labelsize 10 align 21
+        }
+        Fl_Box {} {
+          label {Portions copyright (c) 1996-1997}
+          xywh {100 70 240 15} labelsize 10 align 21
+        }
+        Fl_Button {} {
+          label {<http://www.hewgill.com>}
+          callback openURL
+          xywh {100 100 125 15} box FLAT_BOX selection_color 2 labelsize 10 labelcolor 4 align 21
+        }
+        Fl_Button {} {
+          label {<mailto:greg@hewgill.com>}
+          callback openURL
+          xywh {100 115 130 15} box FLAT_BOX selection_color 2 labelsize 10 labelcolor 4 align 21
+        }
+      }
+      Fl_Group {} {
+        label Macintosh
+        xywh {95 35 260 155} labelsize 12 hide
+      } {
+        Fl_Box {} {
+          label {Original Mac port by Craig Schofield}
+          xywh {100 55 240 15} labelsize 10 align 21
+        }
+        Fl_Box {} {
+          label {Portions copyright (c) 1995-1997}
+          xywh {100 70 240 15} labelsize 10 align 21
+        }
+        Fl_Button {} {
+          label {<http://members.aol.com/illumesoft/illume.html>}
+          callback openURL
+          xywh {100 100 220 15} box FLAT_BOX selection_color 2 labelsize 10 labelcolor 4 align 21
+        }
+        Fl_Button {} {
+          label {<mailto:ILLUMESoft@aol.com>}
+          callback openURL
+          xywh {100 115 150 15} box FLAT_BOX selection_color 2 labelsize 10 labelcolor 4 align 21
+        }
+      }
+      Fl_Group {} {
+        label UAE
+        xywh {95 35 260 155} labelsize 12
+      } {
+        Fl_Box {} {
+          label {UAE Amiga Emulator by Bernd Schmidt}
+          xywh {100 55 240 15} labelsize 10 align 21
+        }
+        Fl_Box {} {
+          label {Portions copyright (c) 1995-1997}
+          xywh {100 70 240 15} labelsize 10 align 21
+        }
+        Fl_Button {} {
+          label {<http://www.freiburg.linux.de/~uae>}
+          callback openURL
+          xywh {100 100 170 15} box FLAT_BOX selection_color 2 labelsize 10 labelcolor 4 align 21
+        }
+        Fl_Button {} {
+          label {<mailto:crux@pool.informatik.rwth-aachen.de>}
+          callback openURL selected
+          xywh {100 115 225 15} box FLAT_BOX selection_color 2 labelsize 10 labelcolor 4 align 21
+        }
+      }
+    }
+  }
+} 
+
+Function {PrvMakeMinimizeDialog()} {} {
+  Fl_Window {} {
+    label {Minimizing...}
+    xywh {644 124 375 125} labelsize 12 hide
+  } {
+    Fl_Box {} {
+      label {Pass \#000}
+      xywh {265 15 95 20} labelsize 12 align 25
+      code0 {::PrvSetWidgetID (o, kDlgItemMinPassNumber);}
+    }
+    Fl_Box {} {
+      label {Event: 0,000,000 of 0,000,000}
+      xywh {15 15 250 20} labelsize 12 align 21
+      code0 {::PrvSetWidgetID (o, kDlgItemMinEventNumber);}
+    }
+    Fl_Box {} {
+      label {Elapsed time: 0,000,000.00 seconds}
+      xywh {15 35 250 20} labelsize 12 align 21
+      code0 {::PrvSetWidgetID (o, kDlgItemMinElapsed);}
+    }
+    Fl_Box {} {
+      label {Excluding range 0,000,000 to 0,000,000}
+      xywh {15 55 250 20} labelsize 12 align 21
+      code0 {::PrvSetWidgetID (o, kDlgItemMinRange);}
+    }
+    Fl_Box {} {
+      label {Discarded 0,000,000 of 0,000,000 events}
+      xywh {15 75 250 20} labelsize 12 align 21
+      code0 {::PrvSetWidgetID (o, kDlgItemMinDiscarded);}
+    }
+    Fl_Slider {} {
+      xywh {15 95 260 15} type {Horz Fill} labeltype NO_LABEL labelsize 12 maximum 20 value 5
+      code0 {::PrvSetWidgetID (o, kDlgItemMinProgress);}
+    }
+    Fl_Button {} {
+      label Cancel
+      xywh {295 90 65 25} labelsize 12
+      code0 {::PrvSetWidgetID (o, kDlgItemCancel);}
+    }
+  }
+} 

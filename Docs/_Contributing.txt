@@ -1,0 +1,176 @@
+========================================================================
+Contributing guidelines for the Palm OS Emulator
+Copyright (c) 1999-2001 Palm, Inc. or its subsidiaries.
+All rights reserved.
+
+Please send bug reports, comments, suggestions, etc. to
+<mailto:bug.reports@corp.palm.com>
+========================================================================
+
+The Palm OS Emulator is distributed under and protected by the GNU
+GENERAL PUBLIC LICENSE (the full copy of which is found in _GPL.txt).
+We make the source code available so that others can alter it for their
+own needs.  We do request you submit your changes back to us so that we
+can merge them into the main version of the product, but there is no
+requirement that you do so.  Changes can be submitted to the current
+maintainer (<mailto:keith.rollin@corp.palm.com>) or Palm Developer
+Support (<mailto:bug.reports@corp.palm.com>).
+
+If you make changes and submit them back to us, all I ask is that you
+follow a few guidelines.  The general theme of these guidelines is to
+follow the programming conventions you already find in the source code.
+I don't want this thing to look like a patchwork quilt; it should look
+like it was written by just one person.
+
+*	Naming conventions: I use MacApp's naming conventions:
+
+	Function names begin with upper case letters (e.g., SomeFunction).
+
+	Private function names begin with "Prv" (e.g. PrvHelperFunction).
+	This includes static functions (local to a single file) and
+	private member functions.
+
+	Local variables begin with lower case letters (e.g., myVariable).
+
+	Global variables begin with a "g" (e.g., gCachedData).
+
+	Data members begin with an "f" (e.g., fFieldOfDreams).  However,
+	I'm flexible on this one.  I think the UNIX guys are using
+	"_" for the UNIX-specific portions, and there are probably
+	still some Mac sections that use "m".
+
+	Static data members begin with "fg" (e.g., fgDebuggerData).
+
+	Constants start with a "k" (e.g., kTicksPerSecond).
+
+	To help clean up the namespace a little bit, data types (classes,
+	structs, typedefs, etc.) and file names start with the "Em"
+	prefix.  You may see a mix of this now in the sources, because
+	I'm slowly moving over to that convention.  Using the "Em"
+	prefix for types is more "primitive" that using actual namespaces,
+	but it's simpler (easier to type).
+
+	File guards are based on the name of the file, with the '.' replaced
+	with an underscore.  Thus, the fileguard for EmWhizzyHeader.h is
+	EmWhizzyHeader_h.  File guards are placed only in the header; they
+	are not used to control the inclusion of the header from another
+	file.
+
+*	Use classes and objects only where it makes sense.  There's no need
+	to go overboard.
+
+*	You'll see some places where I use classes with all-static members
+	to emulate namespaces.  This approach was used before CodeWarrior
+	supported namespaces.  Now that it does, I've started using
+	namespaces.  However, neither CodeWarrior Pro 5 nor VC++ 6.0
+	support namespaces in their browsers, so choose which method you
+	like if you introduce a new namespace.
+
+*	By convention, I use pointer types (e.g., "void*") for referencing
+	data in the host computer's space, and the UAE type "emuptr" to
+	reference data residing in the emulated Palm OS space.  (This
+	comment may not make much sense now, but come back to it later
+	once you've looked over the sources and learned how Palm OS
+	memory is emulated.)
+
+*	Braces go like this:
+
+		if (...)
+		{
+			...
+		}
+
+	I use this approach because it is consistant with the bracing rules
+	for function bodies, it's easy to match up the begin and end of
+	a block, and because it's easy to comment out the "if" statement
+	in order to make the block unconditional.  People trying to comment
+	out the "if" statement when it also includes the left brace at the
+	end have to deal with finding and commenting out the right brace
+	as well.
+
+	The contents always move to the right.  None of this in-and-out,
+	back-and-forth GNU stuff.
+
+	I generally like to use braces even if there is only one line
+	in between them, but I'm not adamant about that.
+
+*	One statement per line.  None of this stuff:
+
+		if (...) DoSomething();
+
+	I don't like the DoSomething() being on the same line, since that
+	makes it impossible to put a breakpoint on it.
+
+*	Comment all functions using the following template:
+
+		/***********************************************************************
+		 *
+		 * FUNCTION:	
+		 *
+		 * DESCRIPTION:	
+		 *
+		 * PARAMETERS:	none
+		 *
+		 * RETURNED:	nothing
+		 *
+		 ***********************************************************************/
+
+	Not all functions are currently like this, but I'm working on that.
+
+*	Call global functions using "::". E.g.:
+
+		::SomeGlobalFunction ();
+
+	Again, not all of Poser sources follow this convention, but I'd
+	like to stick to it.
+
+*	When calling non-static member functions from another function of the same
+	class or subclass, use "this->".  When calling static member functions,
+	you may use "EmMyClass::" to prefix the function call.  However, I'm not
+	really sure I like this latter convention, so use the prefix or not, as
+	you choice.
+
+*	When referencing a data member, you may want to also use the "this->"
+	prefix.  I currently don't use this much in Poser, preferring to use
+	the "f" prefix in the data member's name to indicate that it is a data
+	member.  However, by using "this->", you can take advantage of VC++'s
+	type-completion features, which I'm finding to be really handy.
+
+*	No platform-specific calls in the cross-platform files.  If you find any
+	counter-examples to this rule, it's a bug.
+
+*	Let's not go overboard with STL.  Yes, I know you can write a MasterMind
+	program in one line with it (true!), but let's keen this sane.
+
+*	Whitespace.  Use lots of it!  Vertically and horizontally!  It's possible
+	to go overboard -- I knew one programmer who put spaces around every token
+	in his code, leading to stuff like:
+
+		if ( myPtr -> mySubStruct . myField )
+		{
+			for (ii = 0 ; ii < max ; ++ ii)
+			{
+				myObject -> CallSomeFunction ( ii * 2 ) ;
+			}
+		}
+
+	But this is a bit extreme for me.  I like putting braces on their own lines
+	for the vertical spacing, spaces in mathematical expressions, and spaces
+	between the function name and following parameter list, as well as the
+	places most other programmers put them.
+
+		if (myPtr->mySubStruct.myField)
+		{
+			for (ii = 0; ii < max; ++ii)
+			{
+				myObject->CallSomeFunction (ii * 2);
+			}
+		}
+
+Anyway, I'm flexible on most of this stuff.  These are merely guidelines.  I'm
+just asking that you keep them in mind if possible.
+
+Thanks,
+
+-- Keith Rollin
+-- Palm OS Emulator engineer

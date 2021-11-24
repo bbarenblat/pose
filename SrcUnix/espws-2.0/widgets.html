@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+	<TITLE>Widgets - ESP Widget Set for FLTK</TITLE>
+	<LINK REL="STYLESHEET" TYPE="text/css" HREF="fltk.css">
+</HEAD>
+
+<BODY BGCOLOR="#ccccff">
+
+<H1>Widgets</H1>
+
+<P>The widget set includes several base and composite widgets. The base widgets
+include:
+
+<UL>
+
+	<LI><A HREF="CheckButton.html"><CODE>CheckButton</CODE></A>, a
+	better looking check/radio button.
+
+	<LI><A HREF="FileBrowser.html"><CODE>FileBrowser</CODE></A>, a
+	browser widget that supports file icons.
+
+	<LI><A HREF="FileIcon.html"><CODE>FileIcon</CODE></A>, a class
+	for managing and drawing file icons.
+
+	<LI><A HREF="Fl_Wizard.html"><CODE>Fl_Wizard</CODE></A>, an
+	adaptation of the <CODE>Fl_Tabs</CODE> widget for "wizard"
+	interfaces.
+
+	<LI><A HREF="HelpView.html"><CODE>HelpView</CODE></A>, a simple
+	HTML viewing widget.
+
+</UL>
+
+<P>Technically, the <CODE>FileIcon</CODE> class is not a FLTK widget,
+however it does provide a <CODE>label()</CODE> method for widgets,
+much like <CODE>Fl_Pixmap</CODE>.
+
+<P>The composite widgets include:
+
+<UL>
+
+	<LI><A HREF="FileChooser.html"><CODE>FileChooser</CODE></A>, a
+	complete file chooser dialog using the <CODE>FileBrowser</CODE>,
+	<CODE>FileIcon</CODE>, and <CODE>FileInput</CODE> widgets.
+
+	<LI><A HREF="HelpDialog.html"><CODE>HelpDialog</CODE></A>, a
+	complete help dialog using the <CODE>HelpView</CODE> widget.
+
+	<LI><A HREF="HelpApp.html"><CODE>HelpApp</CODE></A>, a
+	simple web browser using the <CODE>FileChooser</CODE> and
+	<CODE>HelpView</CODE> widgets.
+
+</UL>
+
+<P>The <CODE>HelpDialog</CODE> widget is designed for embedded use within
+a FLTK application, while the <CODE>HelpApp</CODE> widget provides the
+framework for a complete application, such as the
+<A HREF="flsurf.html">flsurf</A> application included with the widget set.
+
+</BODY>
+</HTML>

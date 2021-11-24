@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+	<TITLE>FileInput - ESP Widget Set for FLTK</TITLE>
+	<LINK REL="STYLESHEET" TYPE="text/css" HREF="fltk.css">
+</HEAD>
+
+<BODY BGCOLOR="#ccccff">
+
+<!-- NEW PAGE -->
+<H2>class FileInput</H2>
+
+<HR>
+
+<H3>Class Hierarchy</H3>
+
+<UL><PRE>
+Fl_Input
+   |
+   +----<B>FileInput</B>
+</PRE></UL>
+
+<H3>Include Files</H3>
+
+<UL><PRE>
+#include "FileInput.h"
+</PRE></UL>
+
+<H3>Description</H3>
+
+<P>The <CODE>FileInput</CODE> widget has got to be a candidate for the
+shortest widget ever. The only difference between it and the <CODE>Fl_Input</CODE>
+widget is that when text is selected in the input field, the <KBD>Tab</KBD> key
+will move the cursor to the end of the selection and clear the selection,
+instead of moving to the next input field.
+
+<H3>Methods</H3>
+
+<UL>
+
+	<LI><A HREF="#FileInput.FileInput">FileInput</A>
+	<LI><A HREF="#FileInput.~FileInput">~FileInput</A>
+
+</UL>
+
+<H4><A NAME="FileInput.FileInput">FileInput(int xx, int yy, int ww, int hh, const char *l = 0)</A></H4>
+
+<P>The constructor creates the <CODE>FileInput</CODE> widget at the specified
+position and size.
+
+<H4><A NAME="FileInput.~FileInput">~FileInput()</A></H4>
+
+<P>The destructor destroys the widget and frees all memory that has been
+allocated.
+
+</BODY>
+</HTML>

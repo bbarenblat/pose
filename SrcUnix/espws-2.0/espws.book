@@ -1,0 +1,18 @@
+#HTMLDOC 1.8.6
+15
+intro.html
+file.html
+help.html
+flsurf.html
+widgets.html
+CheckButton.html
+FileBrowser.html
+FileChooser.html
+FileIcon.html
+FileInput.html
+Fl_Wizard.html
+HelpApp.html
+HelpDialog.html
+HelpView.html
+relnotes.html
+-t pdf12 -f espws.pdf --book --toclevels 2 --toctitle "Table of Contents" --title --linkstyle underline --bodycolor #ffffff --size Universal --left 1.00in --right 0.50in --top 0.50in --bottom 0.50in --header .t. --footer h.1 --tocheader .t. --tocfooter ..i --duplex --portrait --color --no-pscommands --compression=9 --jpeg=90 --fontsize 11.0 --fontspacing 1.2 --headingfont Helvetica --bodyfont Times --headfootsize 11.0 --headfootfont Helvetica --charset 8859-1 --pagemode outlines --pagelayout single --firstpage c1 --pageeffect none --pageduration 10 --effectduration 1.0 --browserwidth 680

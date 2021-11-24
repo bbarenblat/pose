@@ -1,0 +1,16 @@
+========================================================================
+Abridged To Do List for the Palm OS Emulator
+Copyright (c) 1999-2001 Palm, Inc. or its subsidiaries.
+All rights reserved.
+
+Please send bug reports, comments, suggestions, etc. to
+<mailto:bug.reports@corp.palm.com>
+========================================================================
+
+This document contains an overview of some of the major features and
+components of the Palm OS Emulator that still need to be added or worked
+on.  The are listed here not only to let people know what's to come, but
+also to give them a starting point if they wish to contribute to the
+development of the project.
+
+* TBD

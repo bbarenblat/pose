@@ -1,0 +1,139 @@
+diff -Naur espws-2.0-orig/FileChooser.cxx espws-2.0/FileChooser.cxx
+--- espws-2.0-orig/FileChooser.cxx	Tue Feb 29 10:45:55 2000
++++ espws-2.0/FileChooser.cxx	Mon Jul 23 18:27:45 2001
+@@ -128,7 +128,7 @@
+     { Fl_Choice* o = dirMenu = new Fl_Choice(75, 10, 200, 25, "Directory:");
+       o->callback((Fl_Callback*)cb_dirMenu);
+     }
+-    { Fl_Button* o = new Fl_Button(340, 10, 25, 25);
++    { Fl_Button* o = allFiles = new Fl_Button(340, 10, 25, 25);
+       bitmap_allfiles.label(o);
+       o->labelsize(28);
+       o->labelcolor(4);
+@@ -140,6 +140,7 @@
+     o->end();
+   }
+   window->size_range(345, 270, 345);
++directory_chooser_ = false;
+ fileList->filter(p);
+ type(t);
+ value(d);
+@@ -216,6 +217,14 @@
+ }
+ 
+ void FileChooser::type(int t) {
++    if (t == DIRECTORY)
++    {
++	t = SINGLE;
++	directory_chooser_ = true;
++	allFiles->deactivate();
++	fileList->filter("-_-_-_-_-_-");  /* Match that! */
++    }
++
+   type_ = t;
+ if (t == MULTI)
+   fileList->type(FL_MULTI_BROWSER);
+diff -Naur espws-2.0-orig/FileChooser.h espws-2.0/FileChooser.h
+--- espws-2.0-orig/FileChooser.h	Tue Feb 29 10:45:55 2000
++++ espws-2.0/FileChooser.h	Mon Jul 23 18:27:45 2001
+@@ -15,7 +15,7 @@
+ 
+ class FileChooser {
+ public:
+-  enum { SINGLE, MULTI, CREATE };
++  enum { SINGLE, MULTI, CREATE, DIRECTORY };
+   FileChooser(const char *d, const char *p, int t, const char *title);
+ private:
+   Fl_Window *window;
+@@ -41,10 +41,12 @@
+   Fl_Choice *dirMenu;
+   inline void cb_dirMenu_i(Fl_Choice*, void*);
+   static void cb_dirMenu(Fl_Choice*, void*);
++  Fl_Button *allFiles;
+   inline void cb_allfiles_i(Fl_Button*, void*);
+   static void cb_allfiles(Fl_Button*, void*);
+   char directory_[1024];
+   int type_;
++  int directory_chooser_;
+   void fileListCB();
+   void fileNameCB();
+   void newdir();
+diff -Naur espws-2.0-orig/FileChooser2.cxx espws-2.0/FileChooser2.cxx
+--- espws-2.0-orig/FileChooser2.cxx	Tue Jan  4 05:45:51 2000
++++ espws-2.0/FileChooser2.cxx	Mon Jul 23 18:27:45 2001
+@@ -170,7 +170,7 @@
+       pathname[sizeof(pathname) - 1] = '\0';
+     }
+ 
+-    if (filename_isdir(pathname))
++    if (filename_isdir(pathname) && !directory_chooser_)
+       return (0);
+     else
+       return (1);
+@@ -189,7 +189,7 @@
+ 	pathname[sizeof(pathname) - 1] = '\0';
+       }
+ 
+-      if (!filename_isdir(pathname))
++      if (!filename_isdir(pathname) || directory_chooser_)
+ 	count ++;
+     }
+ 
+@@ -209,6 +209,16 @@
+   const char	*name;		// Current filename
+   static char	pathname[1024];	// Filename + directory
+ 
++// There seems to be a little bit of a bug...sometimes
++// the returned path can start with '//'.  I think the
++// Unix file system handles this OK ("ls //tmp" works),
++// but lets clean it up anyway.
++
++  if (strlen (directory_) >= 2 &&
++      directory_[0] == '/' && directory_[1] == '/')
++  {
++      memmove (directory_, directory_ + 1, strlen (directory_));
++  }
+ 
+   if (type_ != MULTI)
+   {
+@@ -227,7 +237,7 @@
+       name = fileList->text(i);
+       sprintf(pathname, "%s/%s", directory_, name);
+ 
+-      if (!filename_isdir(pathname))
++      if (!filename_isdir(pathname) || directory_chooser_)
+       {
+         // Nope, see if this this is "the one"...
+ 	count ++;
+@@ -427,7 +437,7 @@
+   {
+     fileName->value(filename);
+ 
+-    if (!filename_isdir(pathname))
++    if (!filename_isdir(pathname) || directory_chooser_)
+       okButton->activate();
+   }
+ }
+@@ -487,10 +497,10 @@
+     // Enter pressed - select or change directory...
+ 
+ #if defined(WIN32) || defined(__EMX__)
+-    if ((strlen(pathname) == 2 && pathname[1] == ':') ||
+-        filename_isdir(pathname))
++    if (((strlen(pathname) == 2 && pathname[1] == ':') ||
++        filename_isdir(pathname)) && !directory_chooser_)
+ #else
+-    if (filename_isdir(pathname))
++    if (filename_isdir(pathname) && !directory_chooser_)
+ #endif /* WIN32 || __EMX__ */
+       directory(pathname);
+     else if (type_ == CREATE || access(pathname, 0) == 0)
+@@ -622,7 +632,7 @@
+     sprintf(pathname, "%s/%s", directory_, fileName->value());
+ 
+     if ((type_ == CREATE || access(pathname, 0) == 0) &&
+-        !filename_isdir(pathname))
++        (!filename_isdir(pathname) || directory_chooser_))
+       okButton->activate();
+     else
+       okButton->deactivate();

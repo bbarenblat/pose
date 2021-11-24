@@ -1,0 +1,121 @@
+#
+# Makefile for widgets and example programs.
+#
+# Copyright 1999-2000 by Michael Sweet.
+#
+
+#
+# Programs...
+#
+
+AR	=	@AR@
+CC	=	@CC@
+CXX	=	@CXX@
+RANLIB	=	@RANLIB@
+RM	=	@RM@ -f
+SHELL	=	/bin/sh
+
+#
+# Program options...
+#
+
+ARFLAGS	=	crvs
+CFLAGS	=	@CFLAGS@ @DEFS@
+CXXFLAGS =	@CXXFLAGS@ @DEFS@
+LIBS	=	@LIBS@ -lXext -lX11
+LDFLAGS	=	@LDFLAGS@
+
+#
+# Rules...
+#
+
+.SILENT:
+.SUFFIXES:	.c .cxx .h .o
+.c.o:
+	echo Compiling $<...
+	$(CC) $(CFLAGS) -c $<
+.cxx.o:
+	echo Compiling $<...
+	$(CXX) $(CXXFLAGS) -c $<
+
+#
+# Make all targets...
+#
+
+all:	libespws.a testfile testhelp flsurf
+
+
+#
+# Remove object and target files...
+#
+
+clean:
+	$(RM) *.o
+	$(RM) libespws.a
+	$(RM) testfile
+	$(RM) testhelp
+	$(RM) flsurf
+
+
+#
+# Make the file chooser widget library.
+#
+
+LIBOBJS	=	FileBrowser.o FileChooser.o FileChooser2.o FileIcon.o \
+		FileInput.o Fl_Wizard.o HelpApp.o HelpApp2.o HelpDialog.o \
+		HelpView.o
+
+libespws.a:	$(LIBOBJS)
+	echo Building library $@...
+	$(RM) libespws.a
+	$(AR) $(ARFLAGS) libespws.a $(LIBOBJS)
+	$(RANLIB) libespws.a
+
+FileBrowser.o:		FileBrowser.h FileIcon.h
+FileChooser2.o:		FileBrowser.h FileChooser.h FileIcon.h FileInput.h
+FileChooser.o:		FileBrowser.h FileChooser.h FileIcon.h FileInput.h
+FileIcon.o:		FileIcon.h
+FileInput.o:		FileInput.h
+Fl_Wizard.o:		Fl_Wizard.h
+HelpApp.o:		HelpApp.h HelpView.h
+HelpApp2.o:		HelpApp.h HelpView.h
+HelpDialog.o:		HelpDialog.h HelpView.h
+HelpView.o:		HelpView.h
+
+
+#
+# Make the file chooser test program.
+#
+
+testfile:	libespws.a testfile.o
+	echo Linking $@...
+	$(CXX) $(LDFLAGS) -o testfile testfile.o libespws.a $(LIBS)
+
+testfile.o:	FileBrowser.h FileChooser.h FileIcon.h FileInput.h
+
+
+#
+# Make the help test program.
+#
+
+testhelp:	libespws.a testhelp.o
+	echo Linking $@...
+	$(CXX) $(LDFLAGS) -o testhelp testhelp.o libespws.a $(LIBS)
+
+testhelp.o:	HelpDialog.h HelpView.h
+
+
+#
+# Make the flsurf program.
+#
+
+flsurf:	libespws.a flsurf.o 
+	echo Linking $@...
+	$(CXX) $(LDFLAGS) -o flsurf flsurf.o libespws.a $(LIBS)
+
+flsurf.o:	HelpApp.h HelpView.h
+
+
+#
+# End of Makefile.
+#

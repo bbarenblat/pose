@@ -1,0 +1,43 @@
+/* ===================================================================== *\
+	Copyright (c) 2000-2001 Palm, Inc. or its subsidiaries.
+	All rights reserved.
+
+	This file is part of the Palm OS Emulator.
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 2 of the License, or
+	(at your option) any later version.
+\* ===================================================================== */
+
+#include "ROM_Transfer.rsrc.h"
+
+/* pbitm is a fairly brutal image format!  But it's good enough for icons,
+   and you can be sure that everyone will have software capable of editing
+   it.  PilRC does support other image formats too.  */
+
+icon "ROM_Transfer_icon.pbitm"
+
+applicationiconname id 1000 "ROM Transfer"
+
+version id 1 "2.0"
+
+/* Unfortunately, pilrc doesn't allow you to write a very long label as a
+   multiple line string.  */
+
+form id MainForm at (0 0 160 160)
+begin
+  title "ROM Transfer"
+  button "Begin Transfer" id MainBeginTransferButton at (79 138 74 16)
+  label "ROM Transfer is provided as a\rcompanion utility to the Palm OS\rEmulator.  To use this utility, select\r\"Download ROM...\" from the File\rmenu in the emulator and follow the\rinstructions provided."
+    autoid at (7 21)
+  label "Transfer Speed:" autoid at (7 98) font 1
+  popuptrigger "" id MainSpeedPopTrigger at (90 97 0 13) leftanchor
+  list
+    "115,200 bps" "57,600 bps" "38,400 bps" "28,800 bps"
+    "19,200 bps" "14,400 bps" "9,600 bps"
+    id MainSpeedList at (94 98 65 auto) visibleitems 7 nonusable disabled
+  popuplist MainSpeedPopTrigger MainSpeedList
+  label "Status:" autoid at (49 114) font 1
+  label "Idle                              " MainStatusTextLabel at (93 114)
+end

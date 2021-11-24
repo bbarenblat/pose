@@ -1,0 +1,116 @@
+========================================================================
+Bug List for the Palm OS Emulator
+Copyright (c) 1999-2001 Palm, Inc. or its subsidiaries.
+All rights reserved.
+
+Please send bug reports, comments, suggestions, etc. to
+<mailto:bug.reports@corp.palm.com>
+========================================================================
+
+This document contains the list of known significant bugs in the Palm
+OS Emulator.  This list is not complete -- many insignificant or
+low-runner bugs have been omitted just to keep up the signal to noise
+ratio.
+
+*	Neil needs to receive cmdInitDatabase when his app is installed.
+
+*	You can't reliably change the time with the Preferences App.  The
+	time is generally synched with the host PC time.
+
+*	It's not a good idea to load applications while the Launcher (the
+	"Applications" application) is running.  If the program you're
+	loading doesn't already exist, it won't show up in the list of
+	installed application until you quit and restart Launcher.  If the
+	application you're loading _does_ already exist, the Launcher won't
+	refresh it's list, and will end up with a stale reference to the
+	version you'd just replaced, leading to a Launcher crash.
+
+*	We've seen one case where MacEmulator will draw the LCD area with a
+	white background in single-scale mode instead of green.  The cause
+	of this problem appears to be with an out-of-date driver for a video
+	acceleration board.  Unless this is an issue for you, we probably
+	won't try to figure out a workaround.
+
+*	When working with an external debugger, make sure the ROM is awake
+	(and not sleeping with a blank screen).  Otherwise, communication
+	between the two applications will not occur.
+
+*	Selecting Pilot, PalmPilot, Palm III, or Palm VII as the device to
+	emulate always results in a PalmPilot being emulated.  There are
+	very few side effects of this bug (for instance, a Pilot will now
+	indicate that it has backlighting) but fixing this problem will
+	probably cause more problems than it fixes (for instance, the Palm
+	VII OS would then think that it's on Palm VII hardware instead of
+	PalmPilot hardware and start trying to do Palm VII-specific things,
+	and crashing because there is little actual support for Palm VII
+	hardware).
+
+*	When using NetLib redirection, NetLibSelect doesn't support the use
+	of sysFileDescStdIn or sysFileDescStdOut.
+
+*	There is no IR emulation.
+
+*	HotSync doesn't work on Visor devices.
+
+*	Many operations will hang the emulator if performed when the
+	emulated power is off.  These operations include -- but are not
+	limited to -- typing characters, clicking on the LCD area, running
+	Gremlins, and installing files.  To be on the safe side, limit
+	yourself to clicking on the hard buttons and closing/quitting the
+	session.
+
+*	Sound emulation doesn't work on the Mac.  The facilities previously
+	used don't appear to be available under Carbon, and we haven't yet
+	found any alternatives.  If you know about sound on the Mac, we
+	could use your help!
+
+*	The English Output created by the minimization process is very
+	preliminary, rough, and incomplete.  Some things to know:
+
+	* 	Pen down-drag-up event sequences are reported as a series of
+		"Tap Pen" messages instead of "Press pen here, move to there,
+		and finally lift up".
+
+	* 	The English output will likely contain many messages to "Tap
+		at x,y" instead of something more helpful like "Tap on button
+		called 'Foo'".  That's because the code that determines what was
+		tapped on is incomplete.  For instance, if the tap was on a menu
+		item, you'll get the generic tap message.
+
+	* 	In the cases where a tap at a specific location can't be
+		related in terms for form objects or menu items, or where the
+		exact location in the form object is critical (for instance, in
+		the case of a scrollbar, where taps on the arrows are different
+		from taps on the main part of the scrollbar but are still
+		reported the same way), we hope to provide screen shots with
+		cross-hairs at the location you should tap.
+
+	To address these shortcomings, you may want to do one of two things:
+
+	* 	Help the Palm OS Emulator effort by modifying Poser's output
+		to be more accurate and expressive.  The schedule for the next
+		release of Poser doesn't include time for Palm to address the
+		issues in-house.
+
+	* 	Replay the events from the <Original_File>_Min.pev file.  This
+		effectively carries out the steps described in the English
+		output.  The drawback with this approach is that replaying
+		events also reloads the initial state that existed when the
+		events were generated.  That is, you can't, say, start debugging
+		your application under CodeWarrior, replay the events until an
+		error occurs, and then break into the debugger.
+
+	Enabling such a scenario may also be considered a third party
+	opportunity.
+
+*	Certain versions of Windows (NT 4.0 and '95 for sure, don't know
+	about '98 or ME, but fixed in 2000 and XP) have a problem where they
+	can truncate the bottom of the Choose File common dialog. The amount
+	of this truncation (and even whether or not it occurs) is based on
+	the size an location of the topmost window when the dialog is
+	opened.  If you are seeing this truncation, try moving the
+	underlying window or dialog up on the screen before opening the
+	Choose File dialog.
+
+*	Single-stepping in Gremlins when there is no specified upper event
+	limit doesn't work.

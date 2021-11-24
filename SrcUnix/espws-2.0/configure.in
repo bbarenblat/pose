@@ -1,0 +1,69 @@
+dnl
+dnl Autoconf configuration script for FLTK widget.
+dnl
+dnl Copyright 1999 by Michael Sweet.
+dnl
+dnl Permission is granted to use, copy, modify, and redistribute this file as
+dnl needed.
+dnl
+
+dnl Make sure we have the template for the makefile...
+AC_INIT(Makefile.in)
+
+dnl What OS?
+uname=`uname`
+if test "$uname" = "IRIX64"; then
+    uname="IRIX"
+fi
+
+dnl Checks for programs...
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_RANLIB
+AC_PATH_PROG(AR,ar)
+AC_PATH_PROG(RM,rm)
+
+dnl Check for libraries...
+AC_PATH_X
+if test "$x_libraries" = "/usr/lib"; then
+	echo "Ignoring X library directory \"$x_libraries\" requested by configure."
+	x_libraries="NONE"
+fi
+if test ! "$x_libraries" = "NONE" -a ! "$x_libraries" = ""; then
+	LDFLAGS="$LDFLAGS -L$x_libraries"
+	if test "$uname" = "SunOS"; then
+		LDFLAGS="$LDFLAGS -R$x_libraries"
+	fi
+fi
+if test "$x_includes" = "/usr/include"; then
+	echo "Ignoring X include directory \"$x_includes\" requested by configure."
+	x_includes="NONE"
+fi
+if test ! "$x_includes" = "NONE" -a ! "$x_includes" = ""; then
+	CFLAGS="$CFLAGS -I$x_includes"
+	CXXFLAGS="$CXXFLAGS -I$x_includes"
+fi
+AC_CHECK_LIB(socket,socket,
+if test "$uname" != "IRIX"; then
+	LIBS="-lsocket $LIBS"
+else
+	echo "Not using -lsocket since you are running IRIX."
+fi)
+AC_CHECK_LIB(nsl,gethostbyaddr,
+if test "$uname" != "IRIX"; then
+	LIBS="-lnsl $LIBS"
+else
+	echo "Not using -lnsl since you are running IRIX."
+fi)
+
+AC_CHECK_LIB(cups,httpConnect)
+AC_CHECK_LIB(m,pow)
+AC_CHECK_LIB(GL,glEnable)
+AC_CHECK_LIB(fltk,numericsort)
+
+dnl Output the makefile...
+AC_OUTPUT(Makefile)
+
+dnl
+dnl End of configure script.
+dnl

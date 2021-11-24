@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+	<TITLE>The File Chooser - ESP Widget Set for FLTK</TITLE>
+	<LINK REL="STYLESHEET" TYPE="text/css" HREF="fltk.css">
+</HEAD>
+
+<BODY BGCOLOR="#ccccff">
+
+<H1>The File Chooser</H1>
+
+<P>The <CODE>FileChooser</CODE> widget provides a standard file selection
+dialog for your applications.  It supports three different selection modes -
+single file selection, multiple file selection, and new file selection (for
+use in "save as" situations).
+
+<H2>Implementation</H2>
+
+<P>The <CODE>FileChooser</CODE> widget is based upon four classes:
+
+<UL>
+
+	<LI><CODE>FileBrowser</CODE> - this is a subclass of
+	<CODE>Fl_Browser</CODE> that lists files in a specified directory or
+	all drives/mount points on a system.
+
+	<LI><CODE>FileChooser</CODE> - this is the high-level class that
+	provides the dialog window and controls.
+
+	<LI><CODE>FileIcon</CODE> - this class provides icon images for
+	the <CODE>FileBrowser</CODE> widget and associates
+	filetypes/extensions with those icon images. The current code
+	understands SGI ".fti" files used under IRIX and ".xpm" files
+	used by CDE.
+
+	<LI><CODE>FileInput</CODE> - this is a subclass of
+	<CODE>Fl_Input</CODE> that remaps the Tab key. The new mapping
+	allows a user to move the cursor to the end of the current
+	selection using the Tab key (i.e. to accept filename
+	completion), but if there is no selection the Tab key performs
+	navigation instead.
+
+</UL>
+
+<P>The <CODE>FileIcon</CODE> class allows you to add icons for
+individual file types. Normally you'll just use the
+<CODE>FileIcon::load_system_icons()</CODE> method to load icons
+specific to your system; if the system icons can't be loaded
+then generic file and folder icons are used instead. Icons are
+only shown if you have loaded them.
+
+<H2>Using the FileChooser Widget</H2>
+
+<P>To use the <CODE>FileChooser</CODE> widget in your program, do:
+
+<UL><PRE>
+#include "FileChooser.h"
+
+...
+
+{
+  FileIcon::load_system_icons(); // Optional...
+
+  FileChooser fc("pathname", "*.pattern", type, "title");
+
+  fc.show();
+  while (fc.visible())
+    Fl::wait();
+
+  fc.count()  = number of selected files
+  fc.value()  = value of first (or only) selected file
+  fc.value(n) = value of selection "n"
+}
+</PRE></UL>
+
+</BODY>
+</HTML>
